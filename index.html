@@ -2,341 +2,331 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>⭕ Circle Master</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-  :root{
-    --blue:#2196F3;--green:#4CAF50;--orange:#FF9800;--purple:#9C27B0;
-    --red:#F44336;--teal:#00BCD4;--gold:#FFC107;--dark:#0d1117;
-    --card:#1a2332;--surface:#1e2d42;--text:#e8f4fd;--muted:#7fa8c9;
-    --radius:12px;--glow-blue:0 0 20px rgba(33,150,243,0.5);
-    --glow-green:0 0 20px rgba(76,175,80,0.5);
-  }
-  html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:'Segoe UI',system-ui,sans-serif;color:var(--text)}
-  #app{width:100vw;height:100vh;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
-  #bgCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+:root{
+  --blue:#2196F3;--green:#4CAF50;--orange:#FF9800;--purple:#9C27B0;
+  --red:#F44336;--teal:#00BCD4;--gold:#FFC107;--dark:#0d1117;
+  --card:#1a2332;--text:#e8f4fd;--muted:#7fa8c9;--radius:12px;
+  --glow-blue:0 0 18px rgba(33,150,243,0.5);--glow-green:0 0 18px rgba(76,175,80,0.5);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:'Segoe UI',system-ui,sans-serif;color:var(--text)}
+#app{width:100vw;height:100vh;overflow:hidden;position:relative}
+#bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-  .screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;padding:16px}
-  .screen.active{display:flex}
+/* ── SCREENS ── */
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;padding:16px}
+.screen.active{display:flex}
 
-  /* START */
-  #startScreen{gap:12px}
-  .start-logo{font-size:clamp(2rem,7vw,4rem);font-weight:900;letter-spacing:-2px;background:linear-gradient(135deg,var(--blue),var(--purple),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;line-height:1}
-  .start-sub{font-size:clamp(0.65rem,1.8vw,0.85rem);color:var(--muted);text-align:center;letter-spacing:2px;text-transform:uppercase}
-  .start-score{font-size:0.75rem;color:var(--muted);text-align:center}
-  .start-score span{color:var(--gold);font-weight:700}
-  .btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  .btn{border:none;cursor:pointer;border-radius:50px;font-weight:700;font-size:clamp(0.8rem,2vw,1rem);padding:12px 28px;transition:all .2s;letter-spacing:.5px;min-width:140px;min-height:48px}
-  .btn-primary{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:var(--glow-blue)}
-  .btn-primary:hover{transform:scale(1.05);box-shadow:0 0 30px rgba(33,150,243,0.7)}
-  .btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid rgba(255,255,255,0.15)}
-  .btn-secondary:hover{background:rgba(255,255,255,0.14);transform:scale(1.03)}
-  .btn-green{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;box-shadow:var(--glow-green)}
-  .btn-sm{padding:8px 18px;font-size:0.78rem;min-width:100px;min-height:40px}
+/* ── START ── */
+#startScreen{gap:10px}
+.start-logo{font-size:clamp(1.8rem,6vw,3.5rem);font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,var(--blue),var(--purple),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;line-height:1}
+.start-sub{font-size:clamp(0.6rem,1.6vw,0.8rem);color:var(--muted);text-align:center;letter-spacing:2px;text-transform:uppercase}
+.start-score{font-size:0.72rem;color:var(--muted);text-align:center}
+.start-score span{color:var(--gold);font-weight:700}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{border:none;cursor:pointer;border-radius:50px;font-weight:700;font-size:clamp(0.78rem,2vw,0.95rem);padding:11px 26px;transition:all .18s;min-width:130px;min-height:48px}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;box-shadow:var(--glow-blue)}
+.btn-primary:hover{transform:scale(1.05)}
+.btn-secondary{background:rgba(255,255,255,0.08);color:var(--text);border:1px solid rgba(255,255,255,0.15)}
+.btn-secondary:hover{background:rgba(255,255,255,0.14)}
+.btn-green{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;box-shadow:var(--glow-green)}
+.btn-sm{padding:8px 16px;font-size:0.76rem;min-width:90px;min-height:44px}
 
-  /* INSTRUCTIONS */
-  #instrScreen{justify-content:flex-start;padding:10px}
-  .instr-header{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-shrink:0}
-  .instr-header h2{font-size:clamp(0.9rem,2.5vw,1.2rem);font-weight:800}
-  .instr-dots{display:flex;gap:6px}
-  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all .2s}
-  .dot.active{background:var(--blue);box-shadow:0 0 8px var(--blue)}
-  .instr-pages{width:100%;flex:1;position:relative;overflow:hidden;min-height:0}
-  .ipage{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:4px}
-  .ipage.active{display:flex}
-  #ipage1 .circle-anim-wrap{position:relative;width:clamp(90px,18vw,140px);height:clamp(90px,18vw,140px);flex-shrink:0}
-  .ipage-title{font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
-  .ipage-sub{font-size:clamp(0.65rem,1.6vw,0.8rem);color:var(--muted);text-align:center;letter-spacing:1px}
-  .ipage-desc{font-size:clamp(0.7rem,1.8vw,0.85rem);color:var(--text);text-align:center;max-width:500px;line-height:1.5}
-  #ipage2{flex-direction:row;gap:8px;align-items:stretch}
-  .mech-demos{flex:3;display:flex;flex-direction:column;gap:6px}
-  .mech-demo{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);padding:6px 8px;display:flex;align-items:center;gap:8px;overflow:hidden;min-height:0}
-  .mech-label{font-size:clamp(0.6rem,1.4vw,0.75rem);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
-  .mech-desc{font-size:clamp(0.55rem,1.3vw,0.7rem);color:var(--muted);line-height:1.3}
-  .mech-demo-canvas{flex-shrink:0}
-  .rounds-panel{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);padding:8px;display:flex;flex-direction:column;gap:6px}
-  .round-item{display:flex;flex-direction:column;gap:2px;padding:5px 7px;border-radius:8px;border-left:3px solid transparent}
-  .round-item:nth-child(2){background:rgba(33,150,243,0.08);border-color:var(--blue)}
-  .round-item:nth-child(3){background:rgba(255,152,0,0.08);border-color:var(--orange)}
-  .round-item:nth-child(4){background:rgba(156,39,176,0.08);border-color:var(--purple)}
-  .round-item:nth-child(5){background:rgba(76,175,80,0.08);border-color:var(--green)}
-  .round-title{font-size:clamp(0.55rem,1.2vw,0.7rem);font-weight:700}
-  .round-sub{font-size:clamp(0.5rem,1.1vw,0.63rem);color:var(--muted)}
-  .diff-badge{display:inline-block;padding:2px 6px;border-radius:4px;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-  .diff-easy{background:rgba(76,175,80,0.2);color:var(--green)}
-  .diff-med{background:rgba(255,152,0,0.2);color:var(--orange)}
-  .diff-hard{background:rgba(244,67,54,0.2);color:var(--red)}
-  .diff-all{background:rgba(156,39,176,0.2);color:var(--purple)}
-  #ipage3 .controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:480px}
-  .ctrl-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:10px}
-  .ctrl-icon{font-size:1.4rem;margin-bottom:4px}
-  .ctrl-name{font-size:0.75rem;font-weight:700;margin-bottom:4px}
-  .ctrl-list{font-size:0.65rem;color:var(--muted);line-height:1.6}
-  .instr-nav{display:flex;gap:10px;align-items:center;margin-top:6px;flex-shrink:0}
+/* ── INSTRUCTIONS ── */
+#instrScreen{justify-content:flex-start;padding:8px 10px 6px}
+.instr-header{width:100%;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-shrink:0}
+.instr-header h2{font-size:clamp(0.85rem,2.5vw,1.1rem);font-weight:800}
+.instr-dots{display:flex;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all .2s}
+.dot.active{background:var(--blue);box-shadow:0 0 7px var(--blue)}
+/* pages container fills remaining height */
+.instr-pages{width:100%;flex:1;position:relative;overflow:hidden;min-height:0}
+.ipage{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:4px 2px}
+.ipage.active{display:flex}
 
-  /* GAME HUD */
-  #gameScreen{justify-content:flex-start;padding:0;gap:0}
-  #hud{width:100%;background:rgba(13,17,23,0.95);border-bottom:1px solid rgba(255,255,255,0.08);padding:6px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:20}
-  #hudTitle{font-size:clamp(0.65rem,1.8vw,0.85rem);font-weight:700;color:var(--blue);min-width:0;flex:1}
-  .hud-score{font-size:clamp(0.75rem,2vw,0.95rem);font-weight:900;color:var(--gold);white-space:nowrap}
-  .hud-lives{font-size:clamp(0.85rem,2.2vw,1.1rem);white-space:nowrap}
-  .hud-timer{background:rgba(33,150,243,0.15);border:1px solid var(--blue);border-radius:20px;padding:3px 10px;font-size:clamp(0.75rem,2vw,0.9rem);font-weight:700;color:var(--blue);white-space:nowrap;min-width:52px;text-align:center}
-  .hud-timer.urgent{background:rgba(244,67,54,0.2);border-color:var(--red);color:var(--red);animation:pulse .5s infinite}
-  .hud-round{font-size:clamp(0.65rem,1.5vw,0.8rem);color:var(--muted);white-space:nowrap}
-  #actLabel{width:100%;padding:4px 14px;font-size:clamp(0.6rem,1.4vw,0.75rem);color:var(--muted);background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0}
-  #gameArea{width:100%;flex:1;position:relative;overflow:hidden;min-height:0;display:flex;flex-direction:column}
-  #progress-bar-wrap{width:100%;height:4px;background:rgba(255,255,255,0.08);flex-shrink:0}
-  #progress-bar{height:4px;background:linear-gradient(90deg,var(--blue),var(--purple));width:0%;transition:width .4s}
-  #hintBar{padding:4px 14px;font-size:clamp(0.58rem,1.3vw,0.7rem);color:var(--muted);background:rgba(255,255,255,0.02);flex-shrink:0;display:flex;align-items:center;gap:6px}
+/* Page 1 */
+.ipage-title{font-size:clamp(1.3rem,4vw,2rem);font-weight:900;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+.ipage-sub{font-size:clamp(0.62rem,1.5vw,0.78rem);color:var(--muted);text-align:center;letter-spacing:1px}
+.ipage-desc{font-size:clamp(0.68rem,1.7vw,0.82rem);color:var(--text);text-align:center;max-width:480px;line-height:1.5}
 
-  /* SORTER */
-  #sorterGame{display:none;flex:1;flex-direction:column;padding:8px;gap:8px;overflow:hidden}
-  #sorterGame.active{display:flex}
-  .sorter-prompt{font-size:clamp(0.7rem,1.8vw,0.85rem);text-align:center;color:var(--muted)}
-  #sortCards{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;flex-shrink:0}
-  .sort-card{background:var(--card);border:2px solid rgba(255,255,255,0.12);border-radius:var(--radius);padding:6px;cursor:grab;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .2s;width:clamp(80px,14vw,110px);min-height:48px}
-  .sort-card:hover{border-color:var(--blue);box-shadow:var(--glow-blue);transform:translateY(-2px)}
-  .sort-card.dragging{opacity:.5;transform:scale(0.95)}
-  #sortBins{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;flex:1;align-content:center}
-  .sort-bin{background:rgba(255,255,255,0.03);border:2px dashed rgba(255,255,255,0.15);border-radius:var(--radius);padding:6px 8px;min-width:clamp(100px,22vw,160px);min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;transition:all .2s}
-  .sort-bin.over{border-color:var(--blue);background:rgba(33,150,243,0.1)}
-  .sort-bin.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}
-  .sort-bin.wrong{border-color:var(--red);background:rgba(244,67,54,0.1)}
-  .sort-bin-def{font-size:clamp(0.52rem,1.2vw,0.65rem);color:var(--muted);line-height:1.3}
-  .sort-bin-slot{width:clamp(60px,10vw,80px);height:clamp(30px,5vh,40px);background:rgba(255,255,255,0.05);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;color:rgba(255,255,255,0.3)}
+/* Page 2 — scrollable column on all sizes */
+#ipage2{justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;gap:6px;padding:4px 6px 8px}
+#ipage2::-webkit-scrollbar{width:3px}
+#ipage2::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px}
+.mech-demo{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);padding:8px;display:flex;align-items:center;gap:8px;width:100%;flex-shrink:0}
+.mech-demo-canvas{flex-shrink:0}
+.mech-label{font-size:clamp(0.58rem,1.5vw,0.72rem);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
+.mech-desc{font-size:clamp(0.55rem,1.3vw,0.68rem);color:var(--muted);line-height:1.3}
+.rounds-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;flex-shrink:0}
+.round-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:6px 8px;border-left:3px solid transparent}
+.round-item:nth-child(1){border-color:var(--blue)}
+.round-item:nth-child(2){border-color:var(--orange)}
+.round-item:nth-child(3){border-color:var(--purple)}
+.round-item:nth-child(4){border-color:var(--green)}
+.round-title{font-size:clamp(0.58rem,1.3vw,0.7rem);font-weight:700}
+.round-sub{font-size:clamp(0.52rem,1.1vw,0.62rem);color:var(--muted)}
+.diff-badge{display:inline-block;padding:1px 5px;border-radius:4px;font-size:0.5rem;font-weight:700;text-transform:uppercase;margin-top:2px}
+.diff-easy{background:rgba(76,175,80,0.2);color:var(--green)}
+.diff-med{background:rgba(255,152,0,0.2);color:var(--orange)}
+.diff-hard{background:rgba(244,67,54,0.2);color:var(--red)}
+.diff-all{background:rgba(156,39,176,0.2);color:var(--purple)}
+.ipage2-footer{font-size:0.58rem;color:var(--muted);text-align:center;flex-shrink:0}
 
-  /* CALCULATOR — interactive canvas layout */
-  #calcGame{display:none;flex:1;flex-direction:row;padding:8px;gap:10px;align-items:center;justify-content:center;overflow:hidden}
-  #calcGame.active{display:flex}
-  .calc-left{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto}
-  .calc-right{display:flex;flex-direction:column;gap:8px;flex:1;min-width:0;max-width:280px}
-  .calc-task-label{font-size:clamp(0.65rem,1.5vw,0.8rem);color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700}
-  .calc-question{font-size:clamp(0.85rem,2.2vw,1.1rem);font-weight:800;color:var(--text);line-height:1.4}
-  .calc-formula-badge{display:inline-block;background:rgba(33,150,243,0.12);border:1px solid rgba(33,150,243,0.3);border-radius:8px;padding:5px 10px;font-size:clamp(0.65rem,1.5vw,0.8rem);color:var(--blue);font-family:monospace;font-weight:700}
-  .calc-input-row{display:flex;gap:8px;align-items:center}
-  .calc-input{background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.15);border-radius:10px;color:var(--text);font-size:clamp(0.9rem,2.5vw,1.2rem);padding:8px 14px;width:clamp(100px,20vw,150px);text-align:center;outline:none;font-weight:700}
-  .calc-input:focus{border-color:var(--blue);box-shadow:var(--glow-blue)}
-  .calc-unit{font-size:clamp(0.75rem,2vw,0.9rem);color:var(--muted);font-weight:600;white-space:nowrap}
-  .calc-btns{display:flex;gap:8px}
-  .calc-qcount{font-size:0.65rem;color:var(--muted)}
-  @media(max-width:540px){
-    #calcGame{flex-direction:column}
-    .calc-right{max-width:100%;width:100%}
-  }
+/* Page 3 */
+.controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%;max-width:460px}
+.ctrl-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:9px}
+.ctrl-icon{font-size:1.3rem;margin-bottom:3px}
+.ctrl-name{font-size:0.72rem;font-weight:700;margin-bottom:3px}
+.ctrl-list{font-size:0.62rem;color:var(--muted);line-height:1.55}
+.instr-nav{display:flex;gap:8px;align-items:center;flex-shrink:0;padding-top:4px}
 
-  /* ESTIMATOR */
-  #estimGame{display:none;flex:1;flex-direction:column;padding:8px;gap:8px;align-items:center;justify-content:center;overflow:hidden}
-  #estimGame.active{display:flex}
-  .estim-question{font-size:clamp(0.8rem,2.2vw,1.05rem);font-weight:700;text-align:center}
-  .estim-hint{font-size:clamp(0.6rem,1.5vw,0.75rem);color:var(--muted);text-align:center}
-  .slider-wrap{width:clamp(180px,50vw,320px);display:flex;flex-direction:column;gap:6px}
-  .slider-labels{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--muted)}
-  #estimSlider{width:100%;height:8px;border-radius:4px;-webkit-appearance:none;appearance:none;background:linear-gradient(90deg,var(--blue) var(--val,50%),rgba(255,255,255,0.15) var(--val,50%));outline:none;cursor:pointer}
-  #estimSlider::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--blue);box-shadow:var(--glow-blue);cursor:pointer}
-  .slider-val{text-align:center;font-size:clamp(0.9rem,2.5vw,1.3rem);font-weight:900;color:var(--blue)}
+/* ── HUD ── */
+#gameScreen{justify-content:flex-start;padding:0;gap:0}
+#hud{width:100%;background:rgba(13,17,23,0.97);border-bottom:1px solid rgba(255,255,255,0.07);padding:5px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;z-index:20}
+#hudTitle{font-size:clamp(0.62rem,1.8vw,0.82rem);font-weight:700;color:var(--blue);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hud-score{font-size:clamp(0.72rem,2vw,0.9rem);font-weight:900;color:var(--gold);white-space:nowrap}
+.hud-lives{font-size:clamp(0.8rem,2.2vw,1rem);white-space:nowrap}
+.hud-timer{background:rgba(33,150,243,0.14);border:1px solid var(--blue);border-radius:20px;padding:3px 9px;font-size:clamp(0.72rem,1.9vw,0.88rem);font-weight:700;color:var(--blue);white-space:nowrap;min-width:46px;text-align:center}
+.hud-timer.urgent{background:rgba(244,67,54,0.18);border-color:var(--red);color:var(--red);animation:pulse .5s infinite}
+.hud-round{font-size:clamp(0.6rem,1.4vw,0.76rem);color:var(--muted);white-space:nowrap}
+#actLabel{width:100%;padding:3px 12px;font-size:clamp(0.58rem,1.4vw,0.72rem);color:var(--muted);background:rgba(255,255,255,0.025);border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0}
+#gameArea{width:100%;flex:1;overflow:hidden;min-height:0;display:flex;flex-direction:column}
+#progress-bar-wrap{width:100%;height:3px;background:rgba(255,255,255,0.07);flex-shrink:0}
+#progress-bar{height:3px;background:linear-gradient(90deg,var(--blue),var(--purple));width:0%;transition:width .4s}
+#hintBar{padding:3px 12px;font-size:clamp(0.56rem,1.3vw,0.68rem);color:var(--muted);background:rgba(255,255,255,0.018);flex-shrink:0;display:flex;align-items:center;gap:5px}
 
-  /* END */
-  #endScreen{gap:10px}
-  .end-title{font-size:clamp(1.5rem,5vw,2.5rem);font-weight:900;text-align:center}
-  .end-stars{font-size:clamp(2rem,6vw,3.5rem);text-align:center;letter-spacing:4px}
-  .end-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;max-width:400px}
-  .stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);padding:8px 12px;text-align:center}
-  .stat-val{font-size:clamp(1.1rem,3vw,1.5rem);font-weight:900;color:var(--gold)}
-  .stat-lbl{font-size:clamp(0.58rem,1.3vw,0.7rem);color:var(--muted)}
+/* ── SORTER ── */
+#sorterGame{display:none;flex:1;flex-direction:column;padding:6px 8px;gap:6px;overflow:hidden}
+#sorterGame.active{display:flex}
+.sorter-prompt{font-size:clamp(0.65rem,1.8vw,0.82rem);text-align:center;color:var(--muted);flex-shrink:0}
+#sortCards{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;flex-shrink:0}
+.sort-card{background:var(--card);border:2px solid rgba(255,255,255,0.12);border-radius:var(--radius);padding:5px;cursor:grab;display:flex;align-items:center;justify-content:center;transition:all .2s;width:clamp(76px,13vw,104px);height:clamp(76px,13vw,104px)}
+.sort-card:hover{border-color:var(--blue);box-shadow:var(--glow-blue);transform:translateY(-2px)}
+.sort-card.dragging{opacity:.45;transform:scale(0.93)}
+#sortBins{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;flex:1;align-content:center;overflow:hidden}
+.sort-bin{background:rgba(255,255,255,0.03);border:2px dashed rgba(255,255,255,0.14);border-radius:var(--radius);padding:5px 7px;min-width:clamp(95px,20vw,155px);min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;transition:all .2s}
+.sort-bin.over{border-color:var(--blue);background:rgba(33,150,243,0.09)}
+.sort-bin.correct{border-color:var(--green);background:rgba(76,175,80,0.09)}
+.sort-bin.wrong{border-color:var(--red);background:rgba(244,67,54,0.09)}
+.sort-bin-def{font-size:clamp(0.5rem,1.2vw,0.62rem);color:var(--muted);line-height:1.3}
+.sort-bin-slot{font-size:0.6rem;color:rgba(255,255,255,0.28);margin-top:2px}
 
-  /* FEEDBACK */
-  #feedback{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:none;font-size:clamp(0.9rem,2.5vw,1.1rem);font-weight:700;padding:8px 20px;border-radius:30px;opacity:0;transition:opacity .2s;white-space:nowrap}
-  #feedback.show{opacity:1}
-  #feedback.correct{background:rgba(76,175,80,0.9);color:#fff;box-shadow:var(--glow-green)}
-  #feedback.wrong{background:rgba(244,67,54,0.9);color:#fff}
-  #particles{position:fixed;inset:0;pointer-events:none;z-index:50}
+/* ── CIRCLE BUILDER (Activity 2) ── */
+/* Student drags the radius handle on canvas to match a target value. No typing. */
+#calcGame{display:none;flex:1;flex-direction:column;padding:6px 8px;gap:6px;align-items:center;justify-content:center;overflow:hidden}
+#calcGame.active{display:flex}
+#calcCanvas{display:block;cursor:grab;border-radius:50%;border:2px solid rgba(33,150,243,0.2);flex-shrink:0}
+#calcCanvas:active{cursor:grabbing}
+.builder-panel{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;max-width:340px;flex-shrink:0}
+.builder-target{font-size:clamp(0.9rem,2.6vw,1.15rem);font-weight:900;color:var(--gold);text-align:center}
+.builder-live{font-size:clamp(0.72rem,2vw,0.9rem);color:var(--muted);text-align:center}
+.builder-live span{color:var(--text);font-weight:700}
+.builder-formula{font-size:clamp(0.6rem,1.5vw,0.72rem);color:var(--blue);font-family:monospace;background:rgba(33,150,243,0.1);border:1px solid rgba(33,150,243,0.25);border-radius:6px;padding:3px 10px}
+.builder-bar-wrap{width:100%;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden}
+.builder-bar{height:100%;width:50%;background:linear-gradient(90deg,var(--green),var(--blue));border-radius:4px;transition:width .1s,background .2s}
+.builder-accuracy{font-size:clamp(0.6rem,1.5vw,0.72rem);color:var(--muted);text-align:center;min-height:1.2em}
+.calc-qcount{font-size:0.6rem;color:var(--muted)}
 
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-  @media(max-width:480px){
-    .sort-card{width:clamp(70px,20vw,95px)}
-    .sort-bin{min-width:clamp(90px,28vw,140px)}
-    #ipage2{flex-direction:column}
-    .rounds-panel{flex:none}
-  }
-  @media(max-height:600px){
-    #hud{padding:4px 10px}
-    #actLabel{padding:2px 10px}
-  }
+/* ── CIRCLE TRACER (Activity 3) ── */
+#estimGame{display:none;flex:1;flex-direction:column;padding:6px 8px;gap:6px;align-items:center;justify-content:center;overflow:hidden}
+#estimGame.active{display:flex}
+#estimCanvas{display:block;flex-shrink:0}
+.tracer-panel{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;max-width:320px;flex-shrink:0}
+.tracer-target{font-size:clamp(0.9rem,2.6vw,1.15rem);font-weight:900;color:var(--purple);text-align:center}
+.tracer-live{font-size:clamp(0.72rem,2vw,0.88rem);color:var(--muted);text-align:center}
+.tracer-live span{color:var(--text);font-weight:700}
+.tracer-bar-wrap{width:100%;height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden}
+.tracer-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--blue));border-radius:4px;transition:width .08s,background .15s}
+.tracer-accuracy{font-size:clamp(0.6rem,1.5vw,0.72rem);color:var(--muted);text-align:center;min-height:1.2em}
+
+/* ── END ── */
+#endScreen{gap:9px}
+.end-title{font-size:clamp(1.4rem,5vw,2.3rem);font-weight:900;text-align:center}
+.end-stars{font-size:clamp(1.8rem,6vw,3.2rem);text-align:center;letter-spacing:4px}
+.end-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;max-width:380px}
+.stat-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);padding:7px 10px;text-align:center}
+.stat-val{font-size:clamp(1rem,3vw,1.4rem);font-weight:900;color:var(--gold)}
+.stat-lbl{font-size:clamp(0.55rem,1.3vw,0.67rem);color:var(--muted)}
+
+/* ── FEEDBACK / PARTICLES ── */
+#feedback{position:fixed;top:72px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:none;font-size:clamp(0.85rem,2.5vw,1.05rem);font-weight:700;padding:7px 18px;border-radius:30px;opacity:0;transition:opacity .2s;white-space:nowrap;max-width:90vw;text-align:center}
+#feedback.show{opacity:1}
+#feedback.correct{background:rgba(76,175,80,0.92);color:#fff;box-shadow:var(--glow-green)}
+#feedback.wrong{background:rgba(244,67,54,0.92);color:#fff}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media(max-height:580px){
+  #hud{padding:3px 10px}
+  #actLabel{padding:2px 10px}
+  .sort-card{width:clamp(60px,11vw,84px);height:clamp(60px,11vw,84px)}
+}
 </style>
 </head>
 <body>
 <div id="app">
-  <canvas id="bgCanvas"></canvas>
+<canvas id="bgCanvas"></canvas>
 
-  <!-- START -->
-  <div id="startScreen" class="screen active">
-    <div class="start-logo">⭕ CIRCLE MASTER</div>
-    <div class="start-sub">Cambridge Mathematics · Geometry · Circles</div>
-    <canvas id="startCircleCanvas" width="140" height="140"></canvas>
-    <div class="start-score">Best Score: <span id="highScore">0</span></div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="startGame()">▶ PLAY NOW</button>
-      <button class="btn btn-secondary" onclick="showInstructions()">📖 HOW TO PLAY</button>
-    </div>
+<!-- START -->
+<div id="startScreen" class="screen active">
+  <div class="start-logo">⭕ CIRCLE MASTER</div>
+  <div class="start-sub">Cambridge Mathematics · Geometry · Circles</div>
+  <canvas id="startCircleCanvas" width="130" height="130"></canvas>
+  <div class="start-score">Best Score: <span id="highScore">0</span></div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="startGame()">▶ PLAY NOW</button>
+    <button class="btn btn-secondary" onclick="showInstructions()">📖 HOW TO PLAY</button>
   </div>
-
-  <!-- INSTRUCTIONS -->
-  <div id="instrScreen" class="screen">
-    <div class="instr-header">
-      <h2>📖 How to Play</h2>
-      <div class="instr-dots">
-        <div class="dot active" onclick="goInstrPage(0)"></div>
-        <div class="dot" onclick="goInstrPage(1)"></div>
-        <div class="dot" onclick="goInstrPage(2)"></div>
-      </div>
-    </div>
-    <div class="instr-pages">
-      <!-- PAGE 1 -->
-      <div class="ipage active" id="ipage1">
-        <div class="circle-anim-wrap"><canvas id="instrCircle" width="130" height="130"></canvas></div>
-        <div class="ipage-title">⭕ Circle Master</div>
-        <div class="ipage-sub">Cambridge Mathematics · Geometry</div>
-        <div class="ipage-desc">Master the world of circles! Sort circle parts, calculate measurements, and estimate dimensions across 10 exciting rounds. Earn up to 3 stars!</div>
-        <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="goInstrPage(1)">NEXT →</button></div>
-      </div>
-      <!-- PAGE 2 -->
-      <div class="ipage" id="ipage2">
-        <div class="mech-demos">
-          <div class="mech-demo">
-            <div class="mech-demo-canvas"><canvas id="demo1" width="80" height="80"></canvas></div>
-            <div>
-              <div class="mech-label" style="color:var(--blue)">🔄 Circle Sorter · Rounds 1–3</div>
-              <div class="mech-desc">Drag circle part diagrams (radius, chord, arc…) to their matching definition bins. No labels — identify by shape!</div>
-            </div>
-          </div>
-          <div class="mech-demo">
-            <div class="mech-demo-canvas"><canvas id="demo2" width="80" height="80"></canvas></div>
-            <div>
-              <div class="mech-label" style="color:var(--orange)">🔢 Circle Calculator · Rounds 4–6</div>
-              <div class="mech-desc">Spin the interactive circle diagram, read the given values, then type your calculated answer. C, A, arc length, sector area.</div>
-            </div>
-          </div>
-          <div class="mech-demo">
-            <div class="mech-demo-canvas"><canvas id="demo3" width="80" height="80"></canvas></div>
-            <div>
-              <div class="mech-label" style="color:var(--purple)">🎯 Circle Estimator · Rounds 7–9</div>
-              <div class="mech-desc">A circle appears — drag the slider to estimate its radius, diameter, or circumference by eye.</div>
-            </div>
-          </div>
-        </div>
-        <div class="rounds-panel">
-          <div style="font-size:0.72rem;font-weight:800;color:var(--text);margin-bottom:2px">Round Structure</div>
-          <div class="round-item"><div class="round-title">Rounds 1–3</div><div class="round-sub">Circle Sorter</div><span class="diff-badge diff-easy">Easy</span></div>
-          <div class="round-item"><div class="round-title">Rounds 4–6</div><div class="round-sub">Circle Calculator</div><span class="diff-badge diff-med">Medium</span></div>
-          <div class="round-item"><div class="round-title">Rounds 7–9</div><div class="round-sub">Circle Estimator</div><span class="diff-badge diff-hard">Hard</span></div>
-          <div class="round-item"><div class="round-title">Round 10</div><div class="round-sub">All Activities!</div><span class="diff-badge diff-all">MASTER</span></div>
-          <div style="font-size:0.6rem;color:var(--muted);margin-top:4px">3 lives · Lose 1 per wrong answer or timeout</div>
-          <div class="instr-nav" style="margin-top:auto;padding-top:6px">
-            <button class="btn btn-secondary btn-sm" onclick="goInstrPage(0)">← BACK</button>
-            <button class="btn btn-primary btn-sm" onclick="goInstrPage(2)">NEXT →</button>
-          </div>
-        </div>
-      </div>
-      <!-- PAGE 3 -->
-      <div class="ipage" id="ipage3">
-        <div class="ipage-title" style="font-size:1.4rem">Controls</div>
-        <div class="controls-grid">
-          <div class="ctrl-card"><div class="ctrl-icon">👆</div><div class="ctrl-name">Touch / Mouse</div><div class="ctrl-list">Drag cards to bins<br>Tap input &amp; type<br>Slide the estimator</div></div>
-          <div class="ctrl-card"><div class="ctrl-icon">⌨️</div><div class="ctrl-name">Keyboard</div><div class="ctrl-list">Numbers to input<br>ENTER to confirm<br>M = mute/unmute</div></div>
-          <div class="ctrl-card"><div class="ctrl-icon">❤️</div><div class="ctrl-name">Lives</div><div class="ctrl-list">3 lives total<br>Lose on wrong answer<br>or when time runs out</div></div>
-          <div class="ctrl-card"><div class="ctrl-icon">⭐</div><div class="ctrl-name">Stars</div><div class="ctrl-list">1⭐: 250–449 pts<br>2⭐: 450–649 pts<br>3⭐: 650+ pts</div></div>
-        </div>
-        <div class="instr-nav">
-          <button class="btn btn-secondary btn-sm" onclick="goInstrPage(1)">← BACK</button>
-          <button class="btn btn-primary btn-sm" onclick="hideInstructions()">MAIN MENU</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GAME -->
-  <div id="gameScreen" class="screen">
-    <div id="hud">
-      <div id="hudTitle">Round 1</div>
-      <div class="hud-score">⭐ <span id="scoreVal">0</span></div>
-      <div class="hud-lives" id="livesHud">❤️❤️❤️</div>
-      <div class="hud-timer" id="timerHud">25s</div>
-      <div class="hud-round" id="roundHud">R1/10</div>
-      <button class="btn btn-secondary btn-sm" id="muteBtn" onclick="toggleMute()" style="padding:4px 10px;min-width:36px">🎵</button>
-    </div>
-    <div id="actLabel">Circle Sorter</div>
-    <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
-    <div id="gameArea">
-      <!-- Circle Sorter -->
-      <div id="sorterGame">
-        <div class="sorter-prompt">Drag each diagram card to its correct definition</div>
-        <div id="sortCards"></div>
-        <div id="sortBins"></div>
-      </div>
-      <!-- Circle Calculator -->
-      <div id="calcGame">
-        <div class="calc-left">
-          <canvas id="calcCanvas" width="180" height="180"></canvas>
-          <div class="calc-qcount" id="calcQCount"></div>
-        </div>
-        <div class="calc-right">
-          <div class="calc-task-label">Calculate</div>
-          <div class="calc-question" id="calcQ"></div>
-          <div class="calc-formula-badge" id="calcFormula"></div>
-          <div class="calc-input-row">
-            <input class="calc-input" id="calcInput" type="number" step="0.01" placeholder="?" inputmode="decimal">
-            <div class="calc-unit" id="calcUnit"></div>
-          </div>
-          <div class="calc-btns">
-            <button class="btn btn-green btn-sm" onclick="submitCalc()">✓ CONFIRM</button>
-            <button class="btn btn-secondary btn-sm" onclick="document.getElementById('calcInput').value=''">✕ CLEAR</button>
-          </div>
-        </div>
-      </div>
-      <!-- Circle Estimator -->
-      <div id="estimGame">
-        <canvas id="estimCanvas" width="160" height="160"></canvas>
-        <div class="estim-question" id="estimQ"></div>
-        <div class="estim-hint" id="estimHint"></div>
-        <div class="slider-wrap">
-          <div class="slider-labels"><span id="sliderMin">0</span><span id="sliderMax">20</span></div>
-          <input type="range" id="estimSlider" min="0" max="20" step="0.5" value="10" oninput="updateSlider()">
-          <div class="slider-val">📏 <span id="sliderValDisplay">10</span> units</div>
-        </div>
-        <button class="btn btn-green btn-sm" onclick="submitEstim()">✓ LOCK IN</button>
-      </div>
-    </div>
-    <div id="hintBar">💡 <span id="hintText">π ≈ 3.142</span></div>
-  </div>
-
-  <!-- END -->
-  <div id="endScreen" class="screen">
-    <div class="end-title" id="endTitle">🎉 Game Over!</div>
-    <div class="end-stars" id="endStars"></div>
-    <div class="end-stats">
-      <div class="stat-card"><div class="stat-val" id="endScore">0</div><div class="stat-lbl">Total Score</div></div>
-      <div class="stat-card"><div class="stat-val" id="endRounds">10/10</div><div class="stat-lbl">Rounds Completed</div></div>
-      <div class="stat-card"><div class="stat-val" id="endSorted">0</div><div class="stat-lbl">Parts Sorted ✓</div></div>
-      <div class="stat-card"><div class="stat-val" id="endCalcd">0</div><div class="stat-lbl">Calculations ✓</div></div>
-      <div class="stat-card"><div class="stat-val" id="endEstim">0</div><div class="stat-lbl">Estimates ✓</div></div>
-      <div class="stat-card"><div class="stat-val" id="endLives">❤️❤️❤️</div><div class="stat-lbl">Lives Left</div></div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="startGame()">▶ PLAY AGAIN</button>
-      <button class="btn btn-secondary" onclick="showScreen('startScreen')">🏠 MAIN MENU</button>
-    </div>
-  </div>
-
-  <div id="feedback"></div>
-  <canvas id="particles"></canvas>
 </div>
 
+<!-- INSTRUCTIONS -->
+<div id="instrScreen" class="screen">
+  <div class="instr-header">
+    <h2>📖 How to Play</h2>
+    <div class="instr-dots">
+      <div class="dot active" onclick="goInstrPage(0)"></div>
+      <div class="dot" onclick="goInstrPage(1)"></div>
+      <div class="dot" onclick="goInstrPage(2)"></div>
+    </div>
+  </div>
+  <div class="instr-pages">
+    <!-- PAGE 1 -->
+    <div class="ipage active" id="ipage1">
+      <canvas id="instrCircle" width="120" height="120" style="flex-shrink:0"></canvas>
+      <div class="ipage-title">⭕ Circle Master</div>
+      <div class="ipage-sub">Cambridge Mathematics · Geometry</div>
+      <div class="ipage-desc">Master circles through 3 interactive activities across 10 rounds. Sort, calculate, and estimate — all hands-on, no multiple choice!</div>
+      <div class="btn-row"><button class="btn btn-primary btn-sm" onclick="goInstrPage(1)">NEXT →</button></div>
+    </div>
+    <!-- PAGE 2: scrollable column — no overflow on any device -->
+    <div class="ipage" id="ipage2">
+      <div class="mech-demo">
+        <canvas id="demo1" width="64" height="64" class="mech-demo-canvas"></canvas>
+        <div>
+          <div class="mech-label" style="color:var(--blue)">🔄 Circle Sorter · Rounds 1–3</div>
+          <div class="mech-desc">Drag circle part diagrams to the matching definition. Cards show shape only — no labels!</div>
+        </div>
+      </div>
+      <div class="mech-demo">
+        <canvas id="demo2" width="64" height="64" class="mech-demo-canvas"></canvas>
+        <div>
+          <div class="mech-label" style="color:var(--orange)">🔧 Circle Builder · Rounds 4–6</div>
+          <div class="mech-desc">A target value is shown (e.g. Circumference = 37.7 cm). Drag the handle to resize the circle until your live value matches!</div>
+        </div>
+      </div>
+      <div class="mech-demo">
+        <canvas id="demo3" width="64" height="64" class="mech-demo-canvas"></canvas>
+        <div>
+          <div class="mech-label" style="color:var(--purple)">🎯 Circle Tracer · Rounds 7–9</div>
+          <div class="mech-desc">Drag the glowing dot along the circle to trace an arc or sector to a target angle. Stop exactly on the mark!</div>
+        </div>
+      </div>
+      <div class="rounds-grid">
+        <div class="round-item"><div class="round-title">Rounds 1–3</div><div class="round-sub">Circle Sorter</div><span class="diff-badge diff-easy">Easy</span></div>
+        <div class="round-item"><div class="round-title">Rounds 4–6</div><div class="round-sub">Circle Builder</div><span class="diff-badge diff-med">Medium</span></div>
+        <div class="round-item"><div class="round-title">Rounds 7–9</div><div class="round-sub">Circle Tracer</div><span class="diff-badge diff-hard">Hard</span></div>
+        <div class="round-item"><div class="round-title">Round 10</div><div class="round-sub">All Activities!</div><span class="diff-badge diff-all">Master</span></div>
+      </div>
+      <div class="ipage2-footer">3 lives · lose 1 per wrong answer or timeout</div>
+      <div class="instr-nav">
+        <button class="btn btn-secondary btn-sm" onclick="goInstrPage(0)">← BACK</button>
+        <button class="btn btn-primary btn-sm" onclick="goInstrPage(2)">NEXT →</button>
+      </div>
+    </div>
+    <!-- PAGE 3 -->
+    <div class="ipage" id="ipage3">
+      <div class="ipage-title" style="font-size:1.35rem">Controls</div>
+      <div class="controls-grid">
+        <div class="ctrl-card"><div class="ctrl-icon">👆</div><div class="ctrl-name">Touch</div><div class="ctrl-list">Drag cards to bins<br>Drag handle on circle<br>Drag dot to trace arc</div></div>
+        <div class="ctrl-card"><div class="ctrl-icon">⌨️</div><div class="ctrl-name">Keyboard</div><div class="ctrl-list">Type numbers<br>ENTER to confirm<br>M = mute/unmute</div></div>
+        <div class="ctrl-card"><div class="ctrl-icon">❤️</div><div class="ctrl-name">Lives</div><div class="ctrl-list">Start with 3 lives<br>Lose on wrong or timeout</div></div>
+        <div class="ctrl-card"><div class="ctrl-icon">⭐</div><div class="ctrl-name">Stars</div><div class="ctrl-list">1⭐ 250–449 pts<br>2⭐ 450–649 pts<br>3⭐ 650+ pts</div></div>
+      </div>
+      <div class="instr-nav">
+        <button class="btn btn-secondary btn-sm" onclick="goInstrPage(1)">← BACK</button>
+        <button class="btn btn-primary btn-sm" onclick="hideInstructions()">MAIN MENU</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="gameScreen" class="screen">
+  <div id="hud">
+    <div id="hudTitle">Round 1</div>
+    <div class="hud-score">⭐ <span id="scoreVal">0</span></div>
+    <div class="hud-lives" id="livesHud">❤️❤️❤️</div>
+    <div class="hud-timer" id="timerHud">25s</div>
+    <div class="hud-round" id="roundHud">R1/10</div>
+    <button class="btn btn-secondary btn-sm" id="muteBtn" onclick="toggleMute()" style="padding:3px 9px;min-width:34px">🎵</button>
+  </div>
+  <div id="actLabel">Circle Sorter</div>
+  <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+  <div id="gameArea">
+    <!-- Sorter -->
+    <div id="sorterGame">
+      <div class="sorter-prompt">Drag the diagram card to its matching definition</div>
+      <div id="sortCards"></div>
+      <div id="sortBins"></div>
+    </div>
+    <!-- Circle Builder (Activity 2) -->
+    <div id="calcGame">
+      <canvas id="calcCanvas" width="260" height="260"></canvas>
+      <div class="builder-panel">
+        <div class="builder-target" id="builderTarget">Target: C = 37.70 cm</div>
+        <div class="builder-live" id="builderLive">Your value: <span id="builderLiveVal">—</span></div>
+        <div class="builder-formula" id="builderFormula">C = 2πr</div>
+        <div class="builder-bar-wrap"><div class="builder-bar" id="builderBar"></div></div>
+        <div class="builder-accuracy" id="builderAccuracy">Drag the handle to resize the circle</div>
+        <button class="btn btn-green btn-sm" onclick="submitCalc()">✓ LOCK IN</button>
+        <div class="calc-qcount" id="calcQCount"></div>
+      </div>
+    </div>
+    <!-- Circle Tracer (Activity 3) -->
+    <div id="estimGame">
+      <canvas id="estimCanvas" width="200" height="200" style="cursor:crosshair;border-radius:50%;border:2px solid rgba(156,39,176,0.25)"></canvas>
+      <div class="tracer-panel">
+        <div class="tracer-target" id="tracerTarget">Trace the Arc: 120°</div>
+        <div class="tracer-live" id="tracerLive">Your angle: <span id="tracerLiveVal">—</span></div>
+        <div class="tracer-bar-wrap"><div class="tracer-bar" id="tracerBar"></div></div>
+        <div class="tracer-accuracy" id="tracerAccuracy">Drag the glowing dot along the circle</div>
+        <button class="btn btn-green btn-sm" onclick="submitEstim()">✓ LOCK IN</button>
+        <div class="calc-qcount" id="tracerQCount"></div>
+      </div>
+    </div>
+  </div>
+  <div id="hintBar">💡 <span id="hintText">π ≈ 3.142</span></div>
+</div>
+
+<!-- END -->
+<div id="endScreen" class="screen">
+  <div class="end-title" id="endTitle">🏆 Victory!</div>
+  <div class="end-stars" id="endStars">⭐⭐⭐</div>
+  <div class="end-stats">
+    <div class="stat-card"><div class="stat-val" id="endScore">0</div><div class="stat-lbl">Total Score</div></div>
+    <div class="stat-card"><div class="stat-val" id="endRounds">10/10</div><div class="stat-lbl">Rounds Done</div></div>
+    <div class="stat-card"><div class="stat-val" id="endSorted">0</div><div class="stat-lbl">Parts Sorted ✓</div></div>
+    <div class="stat-card"><div class="stat-val" id="endCalcd">0</div><div class="stat-lbl">Calculations ✓</div></div>
+    <div class="stat-card"><div class="stat-val" id="endEstim">0</div><div class="stat-lbl">Estimates ✓</div></div>
+    <div class="stat-card"><div class="stat-val" id="endLives">❤️❤️❤️</div><div class="stat-lbl">Lives Left</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="startGame()">▶ PLAY AGAIN</button>
+    <button class="btn btn-secondary" onclick="showScreen('startScreen')">🏠 MAIN MENU</button>
+  </div>
+</div>
+
+<div id="feedback"></div>
+<canvas id="particles"></canvas>
+</div>
 <script>
 // ── AUDIO ──────────────────────────────────────────────────
-let audioCtx=null,bgOsc=[],bgGain=null,muted=false;
+let audioCtx=null,bgOsc=[],muted=false;
 function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-function playTone(freq,type,dur,vol=0.3,delay=0){
+function playTone(freq,type,dur,vol=0.28,delay=0){
   try{const ctx=getAudio(),o=ctx.createOscillator(),g=ctx.createGain();
   o.type=type;o.frequency.setValueAtTime(freq,ctx.currentTime+delay);
   g.gain.setValueAtTime(0,ctx.currentTime+delay);
@@ -344,105 +334,116 @@ function playTone(freq,type,dur,vol=0.3,delay=0){
   g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+delay+dur);
   o.connect(g);g.connect(ctx.destination);o.start(ctx.currentTime+delay);o.stop(ctx.currentTime+delay+dur);}catch(e){}
 }
-function sfxCorrect(){if(muted)return;playTone(523,'sine',.15,.3);playTone(659,'sine',.15,.25,.12);playTone(784,'sine',.2,.25,.24);}
-function sfxWrong(){if(muted)return;playTone(200,'sawtooth',.3,.2);playTone(150,'sawtooth',.3,.18,.1);}
-function sfxRound(){if(muted)return;[523,659,784,1047].forEach((f,i)=>playTone(f,'sine',.25,.3,i*.1));}
-function sfxLifeLost(){if(muted)return;playTone(330,'sawtooth',.4,.3);playTone(220,'sawtooth',.5,.3,.15);}
-function sfxGameOver(){if(muted)return;[440,330,220,165].forEach((f,i)=>playTone(f,'sawtooth',.35,.25,i*.18));}
-function sfxVictory(){if(muted)return;[523,659,784,1047,1319].forEach((f,i)=>playTone(f,'sine',.3,.35,i*.1));}
+function sfxCorrect(){if(muted)return;playTone(523,'sine',.14,.28);playTone(659,'sine',.14,.24,.11);playTone(784,'sine',.18,.24,.22);}
+function sfxWrong(){if(muted)return;playTone(200,'sawtooth',.28,.18);playTone(150,'sawtooth',.28,.16,.1);}
+function sfxRound(){if(muted)return;[523,659,784,1047].forEach((f,i)=>playTone(f,'sine',.22,.28,i*.09));}
+function sfxLifeLost(){if(muted)return;playTone(330,'sawtooth',.38,.28);playTone(220,'sawtooth',.45,.26,.14);}
+function sfxGameOver(){if(muted)return;[440,330,220,165].forEach((f,i)=>playTone(f,'sawtooth',.32,.22,i*.17));}
+function sfxVictory(){if(muted)return;[523,659,784,1047,1319].forEach((f,i)=>playTone(f,'sine',.28,.32,i*.09));}
 function startBGMusic(){
   if(bgOsc.length||muted)return;
-  try{const ctx=getAudio();bgGain=ctx.createGain();bgGain.gain.setValueAtTime(0.04,ctx.currentTime);bgGain.connect(ctx.destination);
-  [261,330,392,330].forEach(n=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=n;g.gain.setValueAtTime(0.02,ctx.currentTime);o.connect(g);g.connect(bgGain);o.start();bgOsc.push(o);});}catch(e){}
+  try{const ctx=getAudio(),bg=ctx.createGain();bg.gain.value=0.035;bg.connect(ctx.destination);
+  [261,330,392,330].forEach(n=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=n;g.gain.value=0.018;o.connect(g);g.connect(bg);o.start();bgOsc.push(o);});}catch(e){}
 }
 function stopBGMusic(){bgOsc.forEach(o=>{try{o.stop();}catch(e){}});bgOsc=[];}
 function toggleMute(){muted=!muted;document.getElementById('muteBtn').textContent=muted?'🔇':'🎵';if(muted)stopBGMusic();else startBGMusic();}
 
 // ── BACKGROUND ─────────────────────────────────────────────
-const bgCanvas=document.getElementById('bgCanvas'),bgCtx=bgCanvas.getContext('2d');
-let bgCircles=[];
+const bgCv=document.getElementById('bgCanvas'),bgX=bgCv.getContext('2d');
+let bgCs=[];
 function initBG(){
-  bgCanvas.width=window.innerWidth;bgCanvas.height=window.innerHeight;bgCircles=[];
-  for(let i=0;i<12;i++)bgCircles.push({x:Math.random()*bgCanvas.width,y:Math.random()*bgCanvas.height,r:40+Math.random()*120,a:Math.random()*Math.PI*2,speed:0.002+Math.random()*0.004,opacity:0.03+Math.random()*0.06});
+  bgCv.width=window.innerWidth;bgCv.height=window.innerHeight;bgCs=[];
+  for(let i=0;i<11;i++)bgCs.push({x:Math.random()*bgCv.width,y:Math.random()*bgCv.height,r:35+Math.random()*110,a:Math.random()*Math.PI*2,sp:0.002+Math.random()*0.004,op:0.03+Math.random()*0.055});
 }
 function drawBG(){
-  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
-  bgCtx.fillStyle='#0d1117';bgCtx.fillRect(0,0,bgCanvas.width,bgCanvas.height);
-  bgCtx.strokeStyle='rgba(33,150,243,0.04)';bgCtx.lineWidth=1;
-  for(let x=0;x<bgCanvas.width;x+=40){bgCtx.beginPath();bgCtx.moveTo(x,0);bgCtx.lineTo(x,bgCanvas.height);bgCtx.stroke();}
-  for(let y=0;y<bgCanvas.height;y+=40){bgCtx.beginPath();bgCtx.moveTo(0,y);bgCtx.lineTo(bgCanvas.width,y);bgCtx.stroke();}
-  bgCircles.forEach(c=>{
-    c.a+=c.speed;
-    bgCtx.beginPath();bgCtx.arc(c.x,c.y,c.r,0,Math.PI*2);bgCtx.strokeStyle=`rgba(33,150,243,${c.opacity})`;bgCtx.lineWidth=1;bgCtx.stroke();
-    bgCtx.beginPath();bgCtx.moveTo(c.x,c.y);bgCtx.lineTo(c.x+Math.cos(c.a)*c.r,c.y+Math.sin(c.a)*c.r);bgCtx.strokeStyle=`rgba(244,67,54,${c.opacity*1.5})`;bgCtx.lineWidth=1;bgCtx.stroke();
+  bgX.clearRect(0,0,bgCv.width,bgCv.height);bgX.fillStyle='#0d1117';bgX.fillRect(0,0,bgCv.width,bgCv.height);
+  bgX.strokeStyle='rgba(33,150,243,0.035)';bgX.lineWidth=1;
+  for(let x=0;x<bgCv.width;x+=40){bgX.beginPath();bgX.moveTo(x,0);bgX.lineTo(x,bgCv.height);bgX.stroke();}
+  for(let y=0;y<bgCv.height;y+=40){bgX.beginPath();bgX.moveTo(0,y);bgX.lineTo(bgCv.width,y);bgX.stroke();}
+  bgCs.forEach(c=>{
+    c.a+=c.sp;
+    bgX.beginPath();bgX.arc(c.x,c.y,c.r,0,Math.PI*2);bgX.strokeStyle=`rgba(33,150,243,${c.op})`;bgX.lineWidth=1;bgX.stroke();
+    bgX.beginPath();bgX.moveTo(c.x,c.y);bgX.lineTo(c.x+Math.cos(c.a)*c.r,c.y+Math.sin(c.a)*c.r);bgX.strokeStyle=`rgba(244,67,54,${c.op*1.4})`;bgX.lineWidth=1;bgX.stroke();
   });
   requestAnimationFrame(drawBG);
 }
-window.addEventListener('resize',initBG);
-initBG();drawBG();
+window.addEventListener('resize',initBG);initBG();drawBG();
 
-// ── START SCREEN ANIMATION ─────────────────────────────────
-const startC=document.getElementById('startCircleCanvas'),startCtx=startC.getContext('2d');
-let startAngle=0,arcAngle=0.5,arcDir=1;
-function drawStartCircle(){
-  const w=startC.width,h=startC.height,cx=w/2,cy=h/2,r=55;
-  startCtx.clearRect(0,0,w,h);startAngle+=0.015;arcAngle+=0.02*arcDir;
-  if(arcAngle>Math.PI*1.8||arcAngle<0.2)arcDir*=-1;
-  startCtx.beginPath();startCtx.arc(cx,cy,r,0,Math.PI*2);startCtx.strokeStyle='rgba(33,150,243,0.8)';startCtx.lineWidth=2.5;startCtx.stroke();
-  startCtx.beginPath();startCtx.arc(cx,cy,r,startAngle,startAngle+arcAngle);startCtx.strokeStyle='#4CAF50';startCtx.lineWidth=4;startCtx.stroke();
-  startCtx.beginPath();startCtx.moveTo(cx-r,cy);startCtx.lineTo(cx+r,cy);startCtx.strokeStyle='rgba(33,150,243,0.4)';startCtx.lineWidth=1.5;startCtx.setLineDash([4,4]);startCtx.stroke();startCtx.setLineDash([]);
-  const rx=cx+Math.cos(startAngle)*r,ry=cy+Math.sin(startAngle)*r;
-  startCtx.beginPath();startCtx.moveTo(cx,cy);startCtx.lineTo(rx,ry);startCtx.strokeStyle='#F44336';startCtx.lineWidth=2;startCtx.stroke();
-  startCtx.fillStyle='#F44336';startCtx.font='bold 11px sans-serif';startCtx.textAlign='center';
-  startCtx.fillText('r',cx+Math.cos(startAngle)*r*0.5,cy+Math.sin(startAngle)*r*0.5-4);
-  startCtx.fillStyle='rgba(33,150,243,0.7)';startCtx.fillText('d',cx,cy+14);
-  startCtx.beginPath();startCtx.arc(cx,cy,4,0,Math.PI*2);startCtx.fillStyle='#FFC107';startCtx.fill();
-  requestAnimationFrame(drawStartCircle);
+// ── START SCREEN ANIM ──────────────────────────────────────
+const sC=document.getElementById('startCircleCanvas'),sX=sC.getContext('2d');
+let sA=0,arcA=0.5,arcD=1;
+function drawStart(){
+  const cx=sC.width/2,cy=sC.height/2,r=50;
+  sX.clearRect(0,0,sC.width,sC.height);sA+=0.014;arcA+=0.018*arcD;
+  if(arcA>Math.PI*1.75||arcA<0.2)arcD*=-1;
+  sX.beginPath();sX.arc(cx,cy,r,0,Math.PI*2);sX.strokeStyle='rgba(33,150,243,0.75)';sX.lineWidth=2;sX.stroke();
+  sX.beginPath();sX.arc(cx,cy,r,sA,sA+arcA);sX.strokeStyle='#4CAF50';sX.lineWidth=4;sX.stroke();
+  sX.beginPath();sX.moveTo(cx-r,cy);sX.lineTo(cx+r,cy);sX.strokeStyle='rgba(33,150,243,0.35)';sX.lineWidth=1.5;sX.setLineDash([4,4]);sX.stroke();sX.setLineDash([]);
+  const rx=cx+Math.cos(sA)*r,ry=cy+Math.sin(sA)*r;
+  sX.beginPath();sX.moveTo(cx,cy);sX.lineTo(rx,ry);sX.strokeStyle='#F44336';sX.lineWidth=2;sX.stroke();
+  sX.fillStyle='#F44336';sX.font='bold 10px sans-serif';sX.textAlign='center';
+  sX.fillText('r',cx+Math.cos(sA)*r*0.52,cy+Math.sin(sA)*r*0.52-3);
+  sX.fillStyle='rgba(33,150,243,0.65)';sX.fillText('d',cx,cy+13);
+  sX.beginPath();sX.arc(cx,cy,4,0,Math.PI*2);sX.fillStyle='#FFC107';sX.fill();
+  requestAnimationFrame(drawStart);
 }
-drawStartCircle();
+drawStart();
 
-// ── INSTRUCTION ANIMATIONS ─────────────────────────────────
-const instrC=document.getElementById('instrCircle'),instrCtx=instrC.getContext('2d');
-let instrA=0;
-function drawInstrCircle(){
-  const w=instrC.width,h=instrC.height,cx=w/2,cy=h/2,r=50;
-  instrCtx.clearRect(0,0,w,h);instrA+=0.02;
-  instrCtx.beginPath();instrCtx.arc(cx,cy,r,0,Math.PI*2);instrCtx.strokeStyle='rgba(33,150,243,0.6)';instrCtx.lineWidth=2;instrCtx.stroke();
-  instrCtx.beginPath();instrCtx.arc(cx,cy,r,instrA,instrA+Math.PI);instrCtx.strokeStyle='#4CAF50';instrCtx.lineWidth=3;instrCtx.stroke();
-  instrCtx.beginPath();instrCtx.moveTo(cx,cy);instrCtx.lineTo(cx+Math.cos(instrA)*r,cy+Math.sin(instrA)*r);instrCtx.strokeStyle='#F44336';instrCtx.lineWidth=2;instrCtx.stroke();
-  instrCtx.beginPath();instrCtx.arc(cx,cy,4,0,Math.PI*2);instrCtx.fillStyle='#FFC107';instrCtx.fill();
-  requestAnimationFrame(drawInstrCircle);
+// ── INSTRUCTION ANIMS ──────────────────────────────────────
+const iC=document.getElementById('instrCircle'),iX=iC.getContext('2d');
+let iA=0;
+function drawICircle(){
+  const cx=iC.width/2,cy=iC.height/2,r=46;
+  iX.clearRect(0,0,iC.width,iC.height);iA+=0.02;
+  iX.beginPath();iX.arc(cx,cy,r,0,Math.PI*2);iX.strokeStyle='rgba(33,150,243,0.55)';iX.lineWidth=2;iX.stroke();
+  iX.beginPath();iX.arc(cx,cy,r,iA,iA+Math.PI);iX.strokeStyle='#4CAF50';iX.lineWidth=3;iX.stroke();
+  iX.beginPath();iX.moveTo(cx,cy);iX.lineTo(cx+Math.cos(iA)*r,cy+Math.sin(iA)*r);iX.strokeStyle='#F44336';iX.lineWidth=2;iX.stroke();
+  iX.beginPath();iX.arc(cx,cy,4,0,Math.PI*2);iX.fillStyle='#FFC107';iX.fill();
+  requestAnimationFrame(drawICircle);
 }
-drawInstrCircle();
+drawICircle();
 
-const d1=document.getElementById('demo1'),d1c=d1.getContext('2d');
-const d2=document.getElementById('demo2'),d2c=d2.getContext('2d');
-const d3=document.getElementById('demo3'),d3c=d3.getContext('2d');
-let demoT=0;
+const d1c=document.getElementById('demo1').getContext('2d');
+const d2c=document.getElementById('demo2').getContext('2d');
+const d3c=document.getElementById('demo3').getContext('2d');
+let dT=0;
 function drawDemos(){
-  demoT+=0.02;const t=demoT,w=80,h=80,cx=40,cy=40,r=28;
-  // Demo1 – sorter parts cycling
-  d1c.clearRect(0,0,w,h);
-  d1c.beginPath();d1c.arc(cx,cy,r,0,Math.PI*2);d1c.strokeStyle='rgba(33,150,243,0.7)';d1c.lineWidth=1.5;d1c.stroke();
-  const phase=Math.floor(t/2)%4;
-  if(phase===0){d1c.beginPath();d1c.moveTo(cx,cy);d1c.lineTo(cx+r*Math.cos(t),cy+r*Math.sin(t));d1c.strokeStyle='#F44336';d1c.lineWidth=2;d1c.stroke();}
-  else if(phase===1){d1c.beginPath();d1c.moveTo(cx-r,cy);d1c.lineTo(cx+r,cy);d1c.strokeStyle='#2196F3';d1c.lineWidth=2;d1c.stroke();}
-  else if(phase===2){d1c.beginPath();d1c.arc(cx,cy,r,0,Math.PI*1.2);d1c.strokeStyle='#00BCD4';d1c.lineWidth=2;d1c.stroke();}
-  else{d1c.beginPath();d1c.moveTo(cx,cy);d1c.arc(cx,cy,r,0,Math.PI*0.8);d1c.closePath();d1c.fillStyle='rgba(255,87,34,0.2)';d1c.fill();d1c.strokeStyle='#FF5722';d1c.lineWidth=1.5;d1c.stroke();}
+  dT+=0.022;const t=dT,w=64,cx=32,cy=32,r=22;
+  // Demo1 sorter
+  d1c.clearRect(0,0,w,w);
+  d1c.beginPath();d1c.arc(cx,cy,r,0,Math.PI*2);d1c.strokeStyle='rgba(33,150,243,0.65)';d1c.lineWidth=1.5;d1c.stroke();
+  const ph=Math.floor(t/2)%4;
+  d1c.lineWidth=2;
+  if(ph===0){d1c.beginPath();d1c.moveTo(cx,cy);d1c.lineTo(cx+r*Math.cos(t),cy+r*Math.sin(t));d1c.strokeStyle='#F44336';d1c.stroke();}
+  else if(ph===1){d1c.beginPath();d1c.moveTo(cx-r,cy);d1c.lineTo(cx+r,cy);d1c.strokeStyle='#2196F3';d1c.stroke();}
+  else if(ph===2){d1c.beginPath();d1c.arc(cx,cy,r,0.2,Math.PI*1.1);d1c.strokeStyle='#00BCD4';d1c.stroke();}
+  else{d1c.beginPath();d1c.moveTo(cx,cy);d1c.arc(cx,cy,r,0,Math.PI*0.75);d1c.closePath();d1c.fillStyle='rgba(255,87,34,0.18)';d1c.fill();d1c.strokeStyle='#FF5722';d1c.stroke();}
   d1c.beginPath();d1c.arc(cx,cy,3,0,Math.PI*2);d1c.fillStyle='#FFC107';d1c.fill();
-  // Demo2 – calculator: large circle with spinning radius
-  d2c.clearRect(0,0,w,h);
-  d2c.beginPath();d2c.arc(cx,cy,r,0,Math.PI*2);d2c.strokeStyle='rgba(33,150,243,0.7)';d2c.lineWidth=1.5;d2c.stroke();
-  d2c.beginPath();d2c.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+t%(Math.PI*2));d2c.strokeStyle='#4CAF50';d2c.lineWidth=3;d2c.stroke();
-  d2c.beginPath();d2c.moveTo(cx,cy);d2c.lineTo(cx+r*Math.cos(t),cy+r*Math.sin(t));d2c.strokeStyle='#F44336';d2c.lineWidth=1.5;d2c.stroke();
-  d2c.fillStyle='#FFC107';d2c.font='bold 7px sans-serif';d2c.textAlign='center';d2c.fillText('C=?',cx,cy+3);
-  d2c.beginPath();d2c.arc(cx,cy,3,0,Math.PI*2);d2c.fillStyle='#FFC107';d2c.fill();
-  // Demo3 – estimator slider circle
-  d3c.clearRect(0,0,w,h);
-  const estR=15+Math.abs(Math.sin(t))*18;
-  d3c.beginPath();d3c.arc(cx,cy,estR,0,Math.PI*2);d3c.strokeStyle='rgba(156,39,176,0.8)';d3c.lineWidth=2;d3c.stroke();
-  d3c.beginPath();d3c.moveTo(cx,cy);d3c.lineTo(cx+estR,cy);d3c.strokeStyle='#9C27B0';d3c.lineWidth=1.5;d3c.setLineDash([2,2]);d3c.stroke();d3c.setLineDash([]);
-  d3c.fillStyle='#9C27B0';d3c.font='bold 7px sans-serif';d3c.textAlign='center';d3c.fillText('r=?',cx,cy+estR+10);
+  // Demo2 calculator — ruler drag preview
+  d2c.clearRect(0,0,w,w);
+  d2c.beginPath();d2c.arc(cx,cy,r,0,Math.PI*2);d2c.strokeStyle='rgba(33,150,243,0.65)';d2c.lineWidth=1.5;d2c.stroke();
+  // sweeping arc
+  d2c.beginPath();d2c.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+t%(Math.PI*2));d2c.strokeStyle='#4CAF50';d2c.lineWidth=2.5;d2c.stroke();
+  // ruler line
+  const rulerX=cx+r*Math.abs(Math.sin(t*0.5));
+  d2c.beginPath();d2c.moveTo(cx,cy);d2c.lineTo(Math.min(rulerX,cx+r),cy);d2c.strokeStyle='#F44336';d2c.lineWidth=1.8;d2c.stroke();
+  d2c.fillStyle='#FFC107';d2c.font='bold 6px sans-serif';d2c.textAlign='center';d2c.fillText('r=?',cx,cy+r+10);
+  d2c.beginPath();d2c.arc(cx,cy,2.5,0,Math.PI*2);d2c.fillStyle='#FFC107';d2c.fill();
+  // Demo3 tracer — glowing dot circling arc toward a target angle
+  d3c.clearRect(0,0,w,w);
+  d3c.beginPath();d3c.arc(cx,cy,r,0,Math.PI*2);d3c.strokeStyle='rgba(255,255,255,0.1)';d3c.lineWidth=1.5;d3c.stroke();
+  const arcEnd=t%(Math.PI*2);
+  d3c.beginPath();d3c.arc(cx,cy,r,0,arcEnd);d3c.strokeStyle='rgba(156,39,176,0.85)';d3c.lineWidth=3;d3c.stroke();
+  const dotX=cx+r*Math.cos(arcEnd),dotY=cy+r*Math.sin(arcEnd);
+  const grd=d3c.createRadialGradient(dotX,dotY,1,dotX,dotY,8);
+  grd.addColorStop(0,'rgba(156,39,176,0.9)');grd.addColorStop(1,'rgba(156,39,176,0)');
+  d3c.beginPath();d3c.arc(dotX,dotY,8,0,Math.PI*2);d3c.fillStyle=grd;d3c.fill();
+  d3c.beginPath();d3c.arc(dotX,dotY,4,0,Math.PI*2);d3c.fillStyle='#9C27B0';d3c.fill();
+  d3c.strokeStyle='#fff';d3c.lineWidth=1.5;d3c.stroke();
+  const tRad=120*Math.PI/180;
+  d3c.beginPath();d3c.moveTo(cx+r*0.85*Math.cos(tRad),cy+r*0.85*Math.sin(tRad));d3c.lineTo(cx+r*1.15*Math.cos(tRad),cy+r*1.15*Math.sin(tRad));d3c.strokeStyle='#FFC107';d3c.lineWidth=2;d3c.stroke();
+  d3c.fillStyle='#FFC107';d3c.font='bold 6px sans-serif';d3c.textAlign='center';d3c.fillText('120°',cx+(r+11)*Math.cos(tRad),cy+(r+11)*Math.sin(tRad));
+  d3c.beginPath();d3c.arc(cx,cy,2.5,0,Math.PI*2);d3c.fillStyle='#FFC107';d3c.fill();
   requestAnimationFrame(drawDemos);
 }
 drawDemos();
@@ -456,9 +457,11 @@ function goInstrPage(p){
   instrPage=p;
   document.querySelectorAll('.ipage').forEach((e,i)=>e.classList.toggle('active',i===p));
   document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===p));
+  // reset scroll on page 2
+  if(p===1){const pg=document.getElementById('ipage2');if(pg)pg.scrollTop=0;}
 }
 
-// ── GAME STATE ─────────────────────────────────────────────
+// ── STATE ──────────────────────────────────────────────────
 const PI=Math.PI;
 let state={};
 
@@ -473,49 +476,36 @@ const PARTS={
   segment: {label:'Segment', def:'Region bounded by a chord and an arc',            color:'#8BC34A'},
 };
 
-const ROUND_CFG=[
-  null,
-  {mech:1,count:4,timer:25,diff:'EASY'},
-  {mech:1,count:4,timer:25,diff:'EASY'},
-  {mech:1,count:5,timer:22,diff:'MEDIUM'},
-  {mech:2,formulas:['circ','area'],      timer:25,qs:4,diff:'EASY'},
-  {mech:2,formulas:['arc','sector'],     timer:22,qs:4,diff:'MEDIUM'},
-  {mech:2,formulas:['circ','area','arc','sector'],timer:20,qs:5,diff:'HARD'},
-  {mech:3,type:'radius',      min:1, max:10,timer:25,qs:4,diff:'EASY'},
-  {mech:3,type:'diameter',    min:2, max:20,timer:22,qs:5,diff:'MEDIUM'},
-  {mech:3,type:'circumference',min:6,max:60,timer:20,qs:5,diff:'HARD'},
-  {mech:10,timer:30,diff:'MASTER'},
+const ROUND_CFG=[null,
+  {mech:1,count:4,timer:25},
+  {mech:1,count:4,timer:25},
+  {mech:1,count:5,timer:22},
+  {mech:2,formulas:['circ','area'],timer:25,qs:4},
+  {mech:2,formulas:['arc','sector'],timer:22,qs:4},
+  {mech:2,formulas:['circ','area','arc','sector'],timer:20,qs:5},
+  {mech:3,type:'arc',  anglePool:[60,90,120,150,180],       timer:25,qs:4},
+  {mech:3,type:'sector',anglePool:[45,90,120,135,150,180,270],timer:22,qs:5},
+  {mech:3,type:'circ', anglePool:[360,360,360,360,360],       timer:20,qs:5},
+  {mech:10,timer:30},
 ];
-
 function actLabel(r){
   const c=ROUND_CFG[r];if(!c)return'';
-  if(c.mech===1)return'Circle Sorter';
-  if(c.mech===2)return'Circle Calculator';
-  if(c.mech===3)return'Circle Estimator';
-  if(c.mech===10)return'Circle Master – All Activities!';
-  return'';
+  return['','Circle Sorter','Circle Builder','Circle Tracer','','','','','','','Circle Master — All Activities!'][c.mech]||'';
 }
 
-// ── GAME START ─────────────────────────────────────────────
+// ── START ──────────────────────────────────────────────────
 function startGame(){
   state={round:0,score:0,lives:3,timerInterval:null,
     sortedOk:0,calcOk:0,estimOk:0,subQ:0,
-    usedSorterSets:[],
-    usedCalcKeys:new Set(),
-    isCombo:false,combo10Queue:[],combo10Idx:0
-  };
+    usedSorterSets:[],usedKeys:new Set(),
+    isCombo:false,comboQ:[],comboIdx:0};
   try{getAudio().resume();}catch(e){}
-  startBGMusic();
-  showScreen('gameScreen');
-  updateHUD();
-  nextRound();
+  startBGMusic();showScreen('gameScreen');updateHUD();nextRound();
 }
 
 function nextRound(){
-  state.round++;
-  if(state.round>10){endGame(true);return;}
-  clearInterval(state.timerInterval);
-  state.subQ=0;state.isCombo=false;
+  state.round++;if(state.round>10){endGame(true);return;}
+  clearInterval(state.timerInterval);state.subQ=0;state.isCombo=false;
   const cfg=ROUND_CFG[state.round];
   document.getElementById('hudTitle').textContent='Round '+state.round;
   document.getElementById('roundHud').textContent='R'+state.round+'/10';
@@ -528,18 +518,11 @@ function nextRound(){
 }
 
 // ── TIMER ──────────────────────────────────────────────────
-function startTimer(sec,onExpire){
-  clearInterval(state.timerInterval);
-  let t=sec;updateTimerHUD(t);
-  state.timerInterval=setInterval(()=>{
-    t--;updateTimerHUD(t);
-    if(t<=0){clearInterval(state.timerInterval);onExpire();}
-  },1000);
+function startTimer(sec,cb){
+  clearInterval(state.timerInterval);let t=sec;updateTimerHUD(t);
+  state.timerInterval=setInterval(()=>{t--;updateTimerHUD(t);if(t<=0){clearInterval(state.timerInterval);cb();}},1000);
 }
-function updateTimerHUD(t){
-  const el=document.getElementById('timerHud');
-  el.textContent=t+'s';el.classList.toggle('urgent',t<=5);
-}
+function updateTimerHUD(t){const el=document.getElementById('timerHud');el.textContent=t+'s';el.classList.toggle('urgent',t<=5);}
 function updateHUD(){
   document.getElementById('scoreVal').textContent=state.score;
   const l=state.lives;document.getElementById('livesHud').textContent='❤️'.repeat(l)+'🖤'.repeat(Math.max(0,3-l));
@@ -547,114 +530,85 @@ function updateHUD(){
 function updateProgress(){document.getElementById('progress-bar').style.width=((state.round-1)/10*100)+'%';}
 function setHint(t){document.getElementById('hintText').textContent=t;}
 
-// ── LIVES ──────────────────────────────────────────────────
 function loseLife(msg){
   sfxLifeLost();showFeedback('❌ '+msg,false);
   state.lives--;updateHUD();
   if(state.lives<=0){clearInterval(state.timerInterval);setTimeout(()=>endGame(false),900);}
 }
 
-// ── FEEDBACK ───────────────────────────────────────────────
-let feedbackTimer=null;
+let fbTimer=null;
 function showFeedback(msg,ok){
-  const el=document.getElementById('feedback');
-  el.textContent=msg;el.className='show '+(ok?'correct':'wrong');
-  clearTimeout(feedbackTimer);feedbackTimer=setTimeout(()=>{el.className='';},1300);
+  const el=document.getElementById('feedback');el.textContent=msg;el.className='show '+(ok?'correct':'wrong');
+  clearTimeout(fbTimer);fbTimer=setTimeout(()=>{el.className='';},1300);
 }
 
 // ── PARTICLES ──────────────────────────────────────────────
-const partCanvas=document.getElementById('particles'),partCtx=partCanvas.getContext('2d');
-let particles=[];
-function resizePart(){partCanvas.width=window.innerWidth;partCanvas.height=window.innerHeight;}
-resizePart();window.addEventListener('resize',resizePart);
-function spawnParticles(x,y,col,n=20){
-  for(let i=0;i<n;i++)particles.push({x,y,vx:(Math.random()-.5)*7,vy:(Math.random()-.5)*7,life:1,r:3+Math.random()*4,col});
+const pCv=document.getElementById('particles'),pX=pCv.getContext('2d');
+let parts=[];
+function resizeP(){pCv.width=window.innerWidth;pCv.height=window.innerHeight;}
+resizeP();window.addEventListener('resize',resizeP);
+function spawnP(x,y,col,n=18){for(let i=0;i<n;i++)parts.push({x,y,vx:(Math.random()-.5)*7,vy:(Math.random()-.5)*7,life:1,r:3+Math.random()*4,col});}
+function animP(){
+  pX.clearRect(0,0,pCv.width,pCv.height);parts=parts.filter(p=>p.life>0);
+  parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.14;p.life-=0.038;pX.beginPath();pX.arc(p.x,p.y,p.r,0,PI*2);pX.fillStyle=p.col+Math.floor(p.life*255).toString(16).padStart(2,'0');pX.fill();});
+  requestAnimationFrame(animP);
 }
-function animPart(){
-  partCtx.clearRect(0,0,partCanvas.width,partCanvas.height);
-  particles=particles.filter(p=>p.life>0);
-  particles.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=0.04;
-    partCtx.beginPath();partCtx.arc(p.x,p.y,p.r,0,PI*2);
-    partCtx.fillStyle=p.col+Math.floor(p.life*255).toString(16).padStart(2,'0');partCtx.fill();
-  });
-  requestAnimationFrame(animPart);
-}
-animPart();
-function midXY(){return{x:window.innerWidth/2,y:window.innerHeight/2};}
-
-// ── UTIL ───────────────────────────────────────────────────
+animP();
+function mid(){return{x:window.innerWidth/2,y:window.innerHeight/2};}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-// ═══════════════════════════════════════════════════════════
-// ACTIVITY 1: CIRCLE SORTER
-// ═══════════════════════════════════════════════════════════
-let dragEl=null,dragOffX=0,dragOffY=0;
+// ══════════════════════════════════════════════════════════════
+// ACTIVITY 1 — CIRCLE SORTER
+// Cards: canvas diagram only (no text label)
+// Bins: definition text only (no part name)
+// ══════════════════════════════════════════════════════════════
+let dragEl=null,dragOX=0,dragOY=0;
 
-function startSorter(comboCount){
+function startSorter(overrideCount){
   showMech('sorterGame');
-  const count=comboCount||ROUND_CFG[state.round].count;
-  // pick unique subset each round
-  const pool=Object.keys(PARTS);
-  let parts,key,attempts=0;
-  do{
-    parts=shuffle([...pool]).slice(0,count);
-    key=[...parts].sort().join(',');
-    attempts++;
-  }while(state.usedSorterSets.includes(key)&&attempts<20);
+  const count=overrideCount||ROUND_CFG[state.round].count;
+  // unique part set per round
+  let parts,key,att=0;
+  do{parts=shuffle(Object.keys(PARTS)).slice(0,count);key=[...parts].sort().join(',');att++;}
+  while(state.usedSorterSets.includes(key)&&att<20);
   state.usedSorterSets.push(key);
-  setHint('Identify the circle part from the diagram — drag to the matching definition');
-  // cards (diagram only, no label)
+  setHint('Identify the shape on the card — drag it to the correct definition');
+
   const cardsDiv=document.getElementById('sortCards');cardsDiv.innerHTML='';
   shuffle([...parts]).forEach(p=>{
     const card=document.createElement('div');card.className='sort-card';card.dataset.part=p;
-    const cv=document.createElement('canvas');cv.width=72;cv.height=72;
-    drawPartIcon(cv.getContext('2d'),p,72);
-    card.appendChild(cv);cardsDiv.appendChild(card);
+    const cv=document.createElement('canvas');const sz=Math.min(68,Math.floor(window.innerWidth*0.11));cv.width=sz;cv.height=sz;
+    drawPartIcon(cv.getContext('2d'),p,sz);card.appendChild(cv);cardsDiv.appendChild(card);
     setupDragCard(card);
   });
-  // bins (definition only, no part name)
   const binsDiv=document.getElementById('sortBins');binsDiv.innerHTML='';
   shuffle([...parts]).forEach(p=>{
     const bin=document.createElement('div');bin.className='sort-bin';bin.dataset.target=p;
-    const slot=document.createElement('div');slot.className='sort-bin-slot';slot.id='slot_'+p;slot.textContent='Drop here';
     const def=document.createElement('div');def.className='sort-bin-def';def.textContent=PARTS[p].def;
-    bin.append(def,slot);binsDiv.appendChild(bin);
-    setupDropBin(bin);
+    const slot=document.createElement('div');slot.className='sort-bin-slot';slot.id='slot_'+p;slot.textContent='drop here';
+    bin.append(def,slot);binsDiv.appendChild(bin);setupDropBin(bin);
   });
   state.sorterTotal=count;state.sorterDone=0;state.sorterCorrect=0;
-  if(!comboCount)startTimer(ROUND_CFG[state.round].timer,()=>{loseLife('Time ran out!');if(state.lives>0&&!state.isCombo)nextRound();});
+  if(!overrideCount){
+    const cfg=ROUND_CFG[state.round];
+    startTimer(cfg.timer,()=>{loseLife('Time ran out!');if(state.lives>0)setTimeout(state.isCombo?nextCombo10Q:nextRound,900);});
+  }
 }
 
 function drawPartIcon(ctx,part,sz){
-  const cx=sz/2,cy=sz/2,r=sz*0.32;
+  const cx=sz/2,cy=sz/2,r=sz*0.31;
   ctx.clearRect(0,0,sz,sz);
-  ctx.beginPath();ctx.arc(cx,cy,r,0,PI*2);ctx.strokeStyle='rgba(33,150,243,0.45)';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,r,0,PI*2);ctx.strokeStyle='rgba(33,150,243,0.42)';ctx.lineWidth=1.4;ctx.stroke();
   const col=PARTS[part].color;ctx.strokeStyle=col;ctx.lineWidth=2.2;
   switch(part){
-    case'radius':
-      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r,cy);ctx.stroke();
-      ctx.beginPath();ctx.arc(cx,cy,3.5,0,PI*2);ctx.fillStyle=col;ctx.fill();break;
-    case'diameter':
-      ctx.beginPath();ctx.moveTo(cx-r,cy);ctx.lineTo(cx+r,cy);ctx.stroke();break;
-    case'chord':{
-      const a1=0.4,a2=PI*0.85;
-      ctx.beginPath();ctx.moveTo(cx+r*Math.cos(a1),cy+r*Math.sin(a1));ctx.lineTo(cx+r*Math.cos(a2),cy+r*Math.sin(a2));ctx.stroke();break;}
-    case'tangent':
-      ctx.beginPath();ctx.moveTo(cx+r,cy-r*0.75);ctx.lineTo(cx+r,cy+r*0.75);ctx.stroke();break;
-    case'secant':
-      ctx.beginPath();ctx.moveTo(cx-r*1.25,cy-r*0.2);ctx.lineTo(cx+r*1.25,cy+r*0.2);ctx.stroke();break;
-    case'arc':
-      ctx.beginPath();ctx.arc(cx,cy,r,0.2,PI*1.1);ctx.stroke();break;
-    case'sector':
-      ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,0,PI*0.75);ctx.closePath();
-      ctx.fillStyle=col+'30';ctx.fill();ctx.stroke();break;
-    case'segment':{
-      const a1=0,a2=PI*0.75;
-      const x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
-      const x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
-      ctx.beginPath();ctx.arc(cx,cy,r,a1,a2);ctx.lineTo(x1,y1);ctx.fillStyle=col+'30';ctx.fill();
-      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=col;ctx.lineWidth=2.2;ctx.stroke();break;}
+    case'radius':ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r,cy);ctx.stroke();ctx.beginPath();ctx.arc(cx,cy,3.5,0,PI*2);ctx.fillStyle=col;ctx.fill();break;
+    case'diameter':ctx.beginPath();ctx.moveTo(cx-r,cy);ctx.lineTo(cx+r,cy);ctx.stroke();break;
+    case'chord':{const a1=0.4,a2=PI*0.85;ctx.beginPath();ctx.moveTo(cx+r*Math.cos(a1),cy+r*Math.sin(a1));ctx.lineTo(cx+r*Math.cos(a2),cy+r*Math.sin(a2));ctx.stroke();break;}
+    case'tangent':ctx.beginPath();ctx.moveTo(cx+r,cy-r*0.75);ctx.lineTo(cx+r,cy+r*0.75);ctx.stroke();break;
+    case'secant':ctx.beginPath();ctx.moveTo(cx-r*1.25,cy-r*0.2);ctx.lineTo(cx+r*1.25,cy+r*0.2);ctx.stroke();break;
+    case'arc':ctx.beginPath();ctx.arc(cx,cy,r,0.2,PI*1.1);ctx.stroke();break;
+    case'sector':ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,0,PI*0.75);ctx.closePath();ctx.fillStyle=col+'28';ctx.fill();ctx.stroke();break;
+    case'segment':{const a1=0,a2=PI*0.75,x1=cx+r,y1=cy,x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);ctx.beginPath();ctx.arc(cx,cy,r,a1,a2);ctx.lineTo(x1,y1);ctx.fillStyle=col+'28';ctx.fill();ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();break;}
   }
 }
 
@@ -666,362 +620,513 @@ function setupDropBin(bin){
   bin.addEventListener('mouseover',()=>{if(dragEl)bin.classList.add('over');});
   bin.addEventListener('mouseout',()=>bin.classList.remove('over'));
   bin.addEventListener('mouseup',()=>handleDrop(bin));
-  bin.addEventListener('touchend',e=>{
-    const t=e.changedTouches[0];
-    const el=document.elementFromPoint(t.clientX,t.clientY);
-    const b=el&&el.closest('.sort-bin');
-    if(b)handleDrop(b);else endDrag();
-  });
+  bin.addEventListener('touchend',e=>{const t=e.changedTouches[0];const el=document.elementFromPoint(t.clientX,t.clientY);const b=el&&el.closest('.sort-bin');b?handleDrop(b):endDrag();});
 }
 function startDrag(e,card){
   if(!card.dataset.part)return;
   dragEl=card.cloneNode(true);
-  dragEl.style.cssText=`position:fixed;z-index:200;pointer-events:none;opacity:0.9;transform:scale(1.05);transition:none;width:${card.offsetWidth}px`;
-  document.body.appendChild(dragEl);
-  dragOffX=e.clientX-card.getBoundingClientRect().left;
-  dragOffY=e.clientY-card.getBoundingClientRect().top;
+  dragEl.style.cssText=`position:fixed;z-index:200;pointer-events:none;opacity:0.88;transform:scale(1.06);transition:none;width:${card.offsetWidth}px`;
+  document.body.appendChild(dragEl);dragOX=e.clientX-card.getBoundingClientRect().left;dragOY=e.clientY-card.getBoundingClientRect().top;
   moveDrag(e);card.classList.add('dragging');
   document.addEventListener('mousemove',moveDrag);document.addEventListener('mouseup',endDragMouse);
   document.addEventListener('touchmove',t=>moveDrag(t.touches[0]),{passive:true});
-  document.addEventListener('touchend',handleTouchEndDrag,{once:true});
+  document.addEventListener('touchend',touchEndDrag,{once:true});
 }
-function moveDrag(e){if(!dragEl)return;dragEl.style.left=(e.clientX-dragOffX)+'px';dragEl.style.top=(e.clientY-dragOffY)+'px';}
+function moveDrag(e){if(!dragEl)return;dragEl.style.left=(e.clientX-dragOX)+'px';dragEl.style.top=(e.clientY-dragOY)+'px';}
 function endDragMouse(){document.removeEventListener('mousemove',moveDrag);document.removeEventListener('mouseup',endDragMouse);endDrag();}
-function handleTouchEndDrag(e){const t=e.changedTouches[0];const el=document.elementFromPoint(t.clientX,t.clientY);const b=el&&el.closest('.sort-bin');if(b)handleDrop(b);else endDrag();}
+function touchEndDrag(e){const t=e.changedTouches[0];const el=document.elementFromPoint(t.clientX,t.clientY);const b=el&&el.closest('.sort-bin');b?handleDrop(b):endDrag();}
 function endDrag(){if(dragEl){dragEl.remove();dragEl=null;}document.querySelectorAll('.sort-card.dragging').forEach(c=>c.classList.remove('dragging'));}
 
 function handleDrop(bin){
-  const card=document.querySelector('.sort-card.dragging');
-  if(!card){endDrag();return;}
-  const part=card.dataset.part,target=bin.dataset.target;
-  endDrag();bin.classList.remove('over');
-  const ok=part===target;
-  if(ok){
+  const card=document.querySelector('.sort-card.dragging');if(!card){endDrag();return;}
+  const part=card.dataset.part,target=bin.dataset.target;endDrag();bin.classList.remove('over');
+  if(part===target){
     bin.classList.add('correct');card.remove();
-    const slot=document.getElementById('slot_'+target);if(slot){slot.textContent='✓ '+PARTS[target].label;slot.style.color='var(--green)';}
-    state.score+=15;state.sorterCorrect++;state.sortedOk++;
-    sfxCorrect();showFeedback('✓ Correct! +15',true);
-    spawnParticles(midXY().x,midXY().y,'#4CAF50');updateHUD();
-    state.sorterDone++;
+    const sl=document.getElementById('slot_'+target);if(sl){sl.textContent='✓ '+PARTS[target].label;sl.style.color='var(--green)';}
+    state.score+=15;state.sorterCorrect++;state.sortedOk++;sfxCorrect();showFeedback('✓ Correct! +15',true);
+    spawnP(mid().x,mid().y,'#4CAF50');updateHUD();state.sorterDone++;
     if(state.sorterDone>=state.sorterTotal){
       clearInterval(state.timerInterval);
       if(state.sorterCorrect===state.sorterTotal){state.score+=25;updateHUD();showFeedback('🌟 Perfect! +25',true);}
-      sfxRound();
-      if(state.isCombo)setTimeout(nextCombo10Q,900);else setTimeout(nextRound,900);
+      sfxRound();if(state.isCombo)setTimeout(nextCombo10Q,900);else setTimeout(nextRound,900);
     }
   } else {
     bin.classList.add('wrong');setTimeout(()=>bin.classList.remove('wrong'),700);
-    sfxWrong();showFeedback('✗ Wrong — try again!',false);
-    state.lives--;updateHUD();
+    sfxWrong();showFeedback('✗ Wrong — try again!',false);state.lives--;updateHUD();
     if(state.lives<=0){clearInterval(state.timerInterval);setTimeout(()=>endGame(false),900);}
   }
 }
 
-// ═══════════════════════════════════════════════════════════
-// ACTIVITY 2: CIRCLE CALCULATOR
-// ═══════════════════════════════════════════════════════════
-const calcCanvas=document.getElementById('calcCanvas'),calcCtx=calcCanvas.getContext('2d');
-let calcData={},calcAnimId=null,calcAnimT=0;
-// Interactive: user can click/drag canvas to spin the radius indicator
-let calcDragging=false,calcPointerAngle=0;
+// ══════════════════════════════════════════════════════════════
+// ACTIVITY 2 — CIRCLE BUILDER
+//
+// A TARGET value is shown (e.g. "Target Circumference: 37.70 cm").
+// Student DRAGS THE RADIUS HANDLE on the canvas to grow/shrink
+// the circle until their live computed value matches the target.
+// Press LOCK IN to submit. Zero text input — fully hands-on.
+// ══════════════════════════════════════════════════════════════
+const calcCv=document.getElementById('calcCanvas'),calcX=calcCv.getContext('2d');
+let calcData={},calcAnimId=null,calcT=0;
+let builderR=60;    // current radius in px — user drags this
+let builderDragging=false;
 
-calcCanvas.addEventListener('mousedown',e=>{calcDragging=true;updateCalcPointer(e);});
-calcCanvas.addEventListener('mousemove',e=>{if(calcDragging)updateCalcPointer(e);});
-calcCanvas.addEventListener('mouseup',()=>calcDragging=false);
-calcCanvas.addEventListener('touchstart',e=>{calcDragging=true;updateCalcPointer(e.touches[0]);},{passive:true});
-calcCanvas.addEventListener('touchmove',e=>{if(calcDragging)updateCalcPointer(e.touches[0]);},{passive:true});
-calcCanvas.addEventListener('touchend',()=>calcDragging=false);
+// ── Canvas size ──
+function setupCalcCanvas(){
+  const ga=document.getElementById('gameArea');
+  const avail=Math.min(ga.offsetWidth||window.innerWidth,ga.offsetHeight||window.innerHeight*0.7);
+  const sz=Math.max(160,Math.min(Math.floor(avail*0.48),240));
+  calcCv.width=sz;calcCv.height=sz;calcCv.style.width=sz+'px';calcCv.style.height=sz+'px';
+}
 
-function updateCalcPointer(e){
-  const rect=calcCanvas.getBoundingClientRect();
-  const x=e.clientX-rect.left-calcCanvas.width/2;
-  const y=e.clientY-rect.top-calcCanvas.height/2;
-  calcPointerAngle=Math.atan2(y,x);
+// ── Drag the handle ──
+function calcPtrDown(e){
+  builderDragging=true;updateBuilderR(e);
+}
+function calcPtrMove(e){if(builderDragging)updateBuilderR(e);}
+function calcPtrUp(){builderDragging=false;}
+function updateBuilderR(e){
+  const rect=calcCv.getBoundingClientRect();
+  const px=('touches' in e?e.touches[0].clientX:e.clientX)-rect.left-calcCv.width/2;
+  const py=('touches' in e?e.touches[0].clientY:e.clientY)-rect.top-calcCv.height/2;
+  const dist=Math.sqrt(px*px+py*py);
+  const maxR=calcCv.width*0.44;
+  builderR=Math.max(8,Math.min(dist,maxR));
+  updateBuilderPanel();
+}
+calcCv.addEventListener('mousedown',calcPtrDown);
+calcCv.addEventListener('mousemove',calcPtrMove);
+calcCv.addEventListener('mouseup',calcPtrUp);
+calcCv.addEventListener('touchstart',e=>{calcPtrDown(e);e.preventDefault();},{passive:false});
+calcCv.addEventListener('touchmove',e=>{calcPtrMove(e);e.preventDefault();},{passive:false});
+calcCv.addEventListener('touchend',calcPtrUp);
+
+// ── Compute live value from current radius ──
+function builderLiveValue(){
+  const {type,theta,pxPerUnit}=calcData;
+  const r=builderR/pxPerUnit; // radius in cm
+  switch(type){
+    case'circ':   return parseFloat((2*PI*r).toFixed(2));
+    case'area':   return parseFloat((PI*r*r).toFixed(2));
+    case'arc':    return parseFloat((theta/360*2*PI*r).toFixed(2));
+    case'sector': return parseFloat((theta/360*PI*r*r).toFixed(2));
+  }
+  return 0;
+}
+
+function updateBuilderPanel(){
+  const live=builderLiveValue();
+  const target=calcData.target;
+  document.getElementById('builderLiveVal').textContent=live+' '+calcData.unit;
+  const pct=Math.abs(live-target)/target;
+  const barW=Math.max(0,Math.min(100,100-pct*200));
+  const bar=document.getElementById('builderBar');
+  bar.style.width=barW+'%';
+  bar.style.background=pct<=0.02?'#4CAF50':pct<=0.08?'#FFC107':'#F44336';
+  const acc=document.getElementById('builderAccuracy');
+  if(pct<=0.02)acc.textContent='🎯 Perfect — lock it in!';
+  else if(pct<=0.06)acc.textContent='Very close!';
+  else if(pct<=0.12)acc.textContent=live<target?'Too small — drag outward':'Too big — drag inward';
+  else acc.textContent=live<target?'Much too small':'Much too big';
 }
 
 function startCalc(comboFormulas){
-  showMech('calcGame');
-  state.calcAllCorrect=true;
+  showMech('calcGame');setupCalcCanvas();
+  state.calcAllCorrect=true;state.subQ=0;
   loadNextCalcQ(comboFormulas);
 }
 
 function loadNextCalcQ(comboFormulas){
   const cfg=ROUND_CFG[state.isCombo?10:state.round];
-  const qs=comboFormulas?1:(cfg.qs||4);
+  const qs=comboFormulas?1:(cfg?cfg.qs:4)||4;
   if(!state.isCombo&&state.subQ>=qs){
     clearInterval(state.timerInterval);sfxRound();
     if(state.calcAllCorrect){state.score+=30;updateHUD();showFeedback('🌟 Perfect Round! +30',true);}
     setTimeout(nextRound,900);return;
   }
   state.subQ++;
-  const pool=comboFormulas||cfg.formulas;
+  const pool=comboFormulas||(cfg&&cfg.formulas)||['circ','area'];
   const type=pool[Math.floor(Math.random()*pool.length)];
   genCalcQ(type,qs);
-  startTimer((state.isCombo?30:cfg.timer),()=>{
-    loseLife('Time ran out!');
-    if(state.lives>0){if(state.isCombo)setTimeout(nextCombo10Q,900);else setTimeout(()=>loadNextCalcQ(),900);}
-  });
+  const timer=state.isCombo?30:(cfg?cfg.timer:25);
+  startTimer(timer,()=>{loseLife('Time ran out!');if(state.lives>0)setTimeout(state.isCombo?nextCombo10Q:()=>loadNextCalcQ(),900);});
 }
 
 function genCalcQ(type,totalQs){
-  let r,theta,key,attempts=0;
-  do{
-    r=Math.floor(Math.random()*8)+2;         // 2–9
-    theta=(Math.floor(Math.random()*6)+1)*30; // 30–180 step 30
-    key=type+'-'+r+'-'+theta;attempts++;
-  }while(state.usedCalcKeys.has(key)&&attempts<30);
-  state.usedCalcKeys.add(key);
-  let question,formula,answer,unit,hint;
+  let r,theta,key,att=0;
+  do{r=Math.floor(Math.random()*8)+2;theta=(Math.floor(Math.random()*6)+1)*30;key=type+'-'+r+'-'+theta;att++;}
+  while(state.usedKeys.has(key)&&att<30);
+  state.usedKeys.add(key);
+
+  // pxPerUnit: how many canvas pixels = 1 cm
+  // We pick it so the TARGET radius sits at ~55% of canvas radius — gives room to drag in/out
+  const maxPx=calcCv.width*0.44;
+  const pxPerUnit=maxPx/(r*1.8); // r at ~55% of max
+
+  let target,unit,formula,label,hint;
   switch(type){
     case'circ':
-      question=`Circumference — r = ${r} cm`;formula='C = 2πr';
-      answer=parseFloat((2*PI*r).toFixed(2));unit='cm';
-      hint='C = 2 × π × r  |  π ≈ 3.142  |  Round to 2 d.p.';break;
+      target=parseFloat((2*PI*r).toFixed(2));unit='cm';formula='C = 2πr';
+      label='Circumference';hint='Drag the circle to match the target circumference · C = 2πr';break;
     case'area':
-      question=`Area — r = ${r} cm`;formula='A = πr²';
-      answer=parseFloat((PI*r*r).toFixed(2));unit='cm²';
-      hint='A = π × r²  |  π ≈ 3.142  |  Round to 2 d.p.';break;
+      target=parseFloat((PI*r*r).toFixed(2));unit='cm²';formula='A = πr²';
+      label='Area';hint='Drag the circle to match the target area · A = πr²';break;
     case'arc':
-      question=`Arc Length — r = ${r} cm, θ = ${theta}°`;formula='Arc = θ/360 × 2πr';
-      answer=parseFloat((theta/360*2*PI*r).toFixed(2));unit='cm';
-      hint='Arc = θ/360 × 2 × π × r  |  Round to 2 d.p.';break;
+      target=parseFloat((theta/360*2*PI*r).toFixed(2));unit='cm';formula='Arc = θ/360 × 2πr';
+      label=`Arc Length (θ=${theta}°)`;hint='Drag to match the arc length · Arc = θ/360 × 2πr';break;
     case'sector':
-      question=`Sector Area — r = ${r} cm, θ = ${theta}°`;formula='Sector = θ/360 × πr²';
-      answer=parseFloat((theta/360*PI*r*r).toFixed(2));unit='cm²';
-      hint='Sector = θ/360 × π × r²  |  Round to 2 d.p.';break;
+      target=parseFloat((theta/360*PI*r*r).toFixed(2));unit='cm²';formula='Sector = θ/360 × πr²';
+      label=`Sector Area (θ=${theta}°)`;hint='Drag to match the sector area · Sector = θ/360 × πr²';break;
   }
-  calcData={type,r,theta,answer,unit};
-  document.getElementById('calcQ').textContent=question;
-  document.getElementById('calcFormula').textContent=formula;
-  document.getElementById('calcUnit').textContent=unit;
-  document.getElementById('calcInput').value='';
-  document.getElementById('calcInput').focus();
-  document.getElementById('calcQCount').textContent=state.isCombo?'Combo question':'Q '+state.subQ+(totalQs?' / '+totalQs:'');
+
+  calcData={type,r,theta,target,unit,formula,pxPerUnit};
+  // Start radius a bit off so student must drag
+  builderR=maxPx*(0.3+Math.random()*0.25);
+
+  document.getElementById('builderTarget').textContent='Target '+label+': '+target+' '+unit;
+  document.getElementById('builderFormula').textContent=formula;
+  document.getElementById('calcQCount').textContent=state.isCombo?'Combo':'Q '+state.subQ+(totalQs?' / '+totalQs:'');
+  document.getElementById('builderAccuracy').textContent='Drag the handle to resize the circle';
   setHint(hint);
-  drawCalcCircle(type,r,theta);
+  updateBuilderPanel();
+  drawBuilderCircle();
 }
 
-function drawCalcCircle(type,r,theta){
+function drawBuilderCircle(){
   if(calcAnimId)cancelAnimationFrame(calcAnimId);
-  calcAnimT=0;calcPointerAngle=0;
-  const w=calcCanvas.width,h=calcCanvas.height,cx=w/2,cy=h/2,cr=w*0.38;
+  calcT=0;
+  const {type,theta}=calcData;
+  const ta=(theta||0)*PI/180;
+
   function frame(){
-    calcCtx.clearRect(0,0,w,h);calcAnimT+=0.03;
-    const spin=calcDragging?calcPointerAngle:calcAnimT;
-    // faint full circle fill
-    calcCtx.beginPath();calcCtx.arc(cx,cy,cr,0,PI*2);calcCtx.fillStyle='rgba(33,150,243,0.04)';calcCtx.fill();
-    calcCtx.beginPath();calcCtx.arc(cx,cy,cr,0,PI*2);calcCtx.strokeStyle='rgba(33,150,243,0.6)';calcCtx.lineWidth=2;calcCtx.stroke();
-    // highlight depending on type
+    const w=calcCv.width,h=calcCv.height,cx=w/2,cy=h/2;
+    calcX.clearRect(0,0,w,h);calcT+=0.022;
+
+    // dot grid background
+    calcX.fillStyle='rgba(255,255,255,0.04)';
+    for(let gx=12;gx<w;gx+=20)for(let gy=12;gy<h;gy+=20){calcX.beginPath();calcX.arc(gx,gy,1,0,PI*2);calcX.fill();}
+
+    const R=builderR;
+
+    // type-specific fill
+    if(type==='area'){
+      calcX.beginPath();calcX.arc(cx,cy,R,0,PI*2);calcX.fillStyle='rgba(76,175,80,0.14)';calcX.fill();
+    } else if(type==='sector'){
+      calcX.beginPath();calcX.moveTo(cx,cy);calcX.arc(cx,cy,R,0,ta);calcX.closePath();
+      calcX.fillStyle='rgba(156,39,176,0.18)';calcX.fill();
+    }
+
+    // circle outline
+    calcX.beginPath();calcX.arc(cx,cy,R,0,PI*2);
+    calcX.strokeStyle='rgba(33,150,243,0.7)';calcX.lineWidth=2;calcX.stroke();
+
+    // type-specific overlay
     if(type==='circ'){
-      // green circumference trace sweeps
-      calcCtx.beginPath();calcCtx.arc(cx,cy,cr,-PI/2,-PI/2+spin%(PI*2));calcCtx.strokeStyle='#4CAF50';calcCtx.lineWidth=5;calcCtx.stroke();
-    } else if(type==='area'){
-      calcCtx.beginPath();calcCtx.arc(cx,cy,cr,0,PI*2);calcCtx.fillStyle='rgba(76,175,80,0.18)';calcCtx.fill();
+      calcX.beginPath();calcX.arc(cx,cy,R,-PI/2,-PI/2+calcT%(PI*2));
+      calcX.strokeStyle='#4CAF50';calcX.lineWidth=4;calcX.stroke();
     } else if(type==='arc'||type==='sector'){
-      const ta=theta*PI/180;
-      if(type==='sector'){calcCtx.beginPath();calcCtx.moveTo(cx,cy);calcCtx.arc(cx,cy,cr,0,ta);calcCtx.closePath();calcCtx.fillStyle='rgba(156,39,176,0.15)';calcCtx.fill();}
-      calcCtx.beginPath();calcCtx.arc(cx,cy,cr,0,ta);calcCtx.strokeStyle='#9C27B0';calcCtx.lineWidth=5;calcCtx.stroke();
-      // radii bounding the arc/sector
-      calcCtx.beginPath();calcCtx.moveTo(cx,cy);calcCtx.lineTo(cx+cr,cy);calcCtx.strokeStyle='rgba(244,67,54,0.6)';calcCtx.lineWidth=1.5;calcCtx.stroke();
-      calcCtx.beginPath();calcCtx.moveTo(cx,cy);calcCtx.lineTo(cx+cr*Math.cos(ta),cy+cr*Math.sin(ta));calcCtx.strokeStyle='rgba(244,67,54,0.6)';calcCtx.lineWidth=1.5;calcCtx.stroke();
-      // angle label
-      calcCtx.beginPath();calcCtx.arc(cx,cy,cr*0.3,0,ta);calcCtx.strokeStyle='#FFC107';calcCtx.lineWidth=1.5;calcCtx.stroke();
-      calcCtx.fillStyle='#FFC107';calcCtx.font='bold 11px sans-serif';calcCtx.textAlign='center';
-      calcCtx.fillText(theta+'°',cx+cr*0.2,cy-cr*0.05);
+      calcX.beginPath();calcX.arc(cx,cy,R,0,ta);calcX.strokeStyle='#9C27B0';calcX.lineWidth=4;calcX.stroke();
+      // radii
+      calcX.beginPath();calcX.moveTo(cx,cy);calcX.lineTo(cx+R,cy);calcX.strokeStyle='rgba(244,67,54,0.55)';calcX.lineWidth=1.5;calcX.stroke();
+      calcX.beginPath();calcX.moveTo(cx,cy);calcX.lineTo(cx+R*Math.cos(ta),cy+R*Math.sin(ta));calcX.strokeStyle='rgba(244,67,54,0.55)';calcX.lineWidth=1.5;calcX.stroke();
+      const aR=Math.min(R*0.32,22);
+      calcX.beginPath();calcX.arc(cx,cy,aR,0,ta);calcX.strokeStyle='#FFC107';calcX.lineWidth=1.5;calcX.stroke();
+      calcX.fillStyle='#FFC107';calcX.font='bold 10px sans-serif';calcX.textAlign='center';
+      const mA=ta/2;calcX.fillText(theta+'°',cx+(aR+11)*Math.cos(mA),cy+(aR+11)*Math.sin(mA));
     }
-    // spinning interactive radius line
-    calcCtx.beginPath();calcCtx.moveTo(cx,cy);
-    calcCtx.lineTo(cx+cr*Math.cos(spin),cy+cr*Math.sin(spin));
-    calcCtx.strokeStyle='#F44336';calcCtx.lineWidth=2.5;calcCtx.stroke();
-    // r label on radius
-    calcCtx.fillStyle='#F44336';calcCtx.font='bold 12px sans-serif';calcCtx.textAlign='center';
-    calcCtx.fillText('r='+r,cx+cr*0.52*Math.cos(spin),cy+cr*0.52*Math.sin(spin)-6);
+
+    // draggable handle on right edge
+    const hx=cx+R,hy=cy;
+    const live=builderLiveValue(),target=calcData.target;
+    const pct=Math.abs(live-target)/target;
+    const hCol=pct<=0.02?'#4CAF50':pct<=0.08?'#FFC107':'#F44336';
+    // radius line to handle
+    calcX.beginPath();calcX.moveTo(cx,cy);calcX.lineTo(hx,hy);
+    calcX.strokeStyle='rgba(244,67,54,0.5)';calcX.lineWidth=1.5;calcX.setLineDash([4,4]);calcX.stroke();calcX.setLineDash([]);
+    // handle circle
+    calcX.beginPath();calcX.arc(hx,hy,builderDragging?12:9,0,PI*2);
+    calcX.fillStyle=hCol;calcX.fill();
+    calcX.strokeStyle='#fff';calcX.lineWidth=2;calcX.stroke();
+    // ↔ arrows on handle
+    calcX.fillStyle='#fff';calcX.font='bold 9px sans-serif';calcX.textAlign='center';
+    calcX.fillText('↔',hx,hy+3);
+
+    // live r label
+    const rCm=parseFloat((R/calcData.pxPerUnit).toFixed(1));
+    calcX.fillStyle='rgba(244,67,54,0.8)';calcX.font='bold 10px sans-serif';calcX.textAlign='center';
+    calcX.fillText('r = '+rCm+' cm',cx+R/2,cy-8);
+
     // centre dot
-    calcCtx.beginPath();calcCtx.arc(cx,cy,5,0,PI*2);calcCtx.fillStyle='#FFC107';calcCtx.fill();
-    // "?" label
-    calcCtx.fillStyle='rgba(255,255,255,0.35)';calcCtx.font='bold 13px sans-serif';
-    calcCtx.fillText('?',cx+cr*0.28,cy+cr*0.52);
-    // drag hint text
-    if(!calcDragging){
-      calcCtx.fillStyle='rgba(255,255,255,0.18)';calcCtx.font='9px sans-serif';
-      calcCtx.fillText('drag circle',cx,h-6);
+    calcX.beginPath();calcX.arc(cx,cy,5,0,PI*2);calcX.fillStyle='#FFC107';calcX.fill();
+
+    // hint text if not yet dragged near
+    if(!builderDragging&&pct>0.15){
+      calcX.fillStyle='rgba(255,255,255,0.2)';calcX.font='9px sans-serif';calcX.textAlign='center';
+      calcX.fillText('drag ↔ handle to resize',cx,h-5);
     }
+
+    updateBuilderPanel();
     calcAnimId=requestAnimationFrame(frame);
   }
   frame();
 }
 
 function submitCalc(){
-  const val=parseFloat(document.getElementById('calcInput').value);
-  if(isNaN(val)){showFeedback('Enter a number!',false);return;}
   clearInterval(state.timerInterval);
-  const tol=Math.max(0.05,calcData.answer*0.02);
-  const ok=Math.abs(val-calcData.answer)<=tol;
-  if(ok){
-    state.score+=20;state.calcOk++;sfxCorrect();
-    showFeedback('✓ Correct! '+calcData.answer+' '+calcData.unit+' +20',true);
-    spawnParticles(midXY().x,midXY().y,'#2196F3');
-  } else {
-    state.calcAllCorrect=false;
-    sfxWrong();showFeedback('✗ Answer: '+calcData.answer+' '+calcData.unit,false);
-    state.lives--;updateHUD();
-    if(state.lives<=0){setTimeout(()=>endGame(false),900);return;}
-  }
-  updateHUD();
-  if(state.isCombo)setTimeout(nextCombo10Q,900);
-  else setTimeout(()=>loadNextCalcQ(),900);
+  const live=builderLiveValue(),target=calcData.target;
+  const pct=Math.abs(live-target)/target;
+  let pts,msg;
+  if(pct<=0.02){pts=30;msg='🎯 Perfect! +30';}
+  else if(pct<=0.05){pts=25;msg='🌟 Very close! +25';}
+  else if(pct<=0.10){pts=20;msg='✓ Close! +20';}
+  else if(pct<=0.18){pts=15;msg='Good try! +15';}
+  else if(pct<=0.30){pts=10;msg='Nearly! +10';}
+  else{pts=5;msg='Target was '+target+' '+calcData.unit+' · +5';}
+  if(pct>0.18)state.calcAllCorrect=false;
+  state.score+=pts;state.calcOk+=(pts>=20?1:0);
+  if(pts>=20)sfxCorrect();else sfxWrong();
+  showFeedback(msg,pts>=15);
+  if(pts>=20)spawnP(mid().x,mid().y,'#2196F3',pts>=25?28:14);
+  updateHUD();if(state.isCombo)setTimeout(nextCombo10Q,900);else setTimeout(()=>loadNextCalcQ(),900);
 }
 
-// ═══════════════════════════════════════════════════════════
-// ACTIVITY 3: CIRCLE ESTIMATOR
-// ═══════════════════════════════════════════════════════════
-const estimCanvas=document.getElementById('estimCanvas'),estimCtx=estimCanvas.getContext('2d');
-let estimData={},estimAnimId=null,estimAnimT=0;
+// ══════════════════════════════════════════════════════════════
+// ACTIVITY 3 — CIRCLE TRACER
+//
+// A circle is shown with a glowing dot on it.
+// Student DRAGS THE DOT along the circle perimeter to trace
+// an arc or sector to a TARGET ANGLE shown on screen.
+// Round 7: trace full circumference (360°)
+// Round 8: trace an arc to a target angle θ
+// Round 9: trace a sector — stop at the target angle
+// No typing, no slider — pure drag on the circle.
+// ══════════════════════════════════════════════════════════════
+const eCv=document.getElementById('estimCanvas'),eX=eCv.getContext('2d');
+let estimData={},estimAnimId=null,estimT=0;
+let tracerAngle=0;        // current angle the dot is at (radians, 0 = right)
+let tracerDragging=false;
 
-function startEstim(cfg){
-  showMech('estimGame');loadNextEstimQ(cfg);
+function setupEstimCanvas(){
+  const ga=document.getElementById('gameArea');
+  const avail=Math.min(ga.offsetWidth||window.innerWidth,(ga.offsetHeight||window.innerHeight*0.7)*0.55);
+  const sz=Math.max(150,Math.min(Math.floor(avail),200));
+  eCv.width=sz;eCv.height=sz;eCv.style.width=sz+'px';eCv.style.height=sz+'px';
 }
 
-function loadNextEstimQ(cfgOverride){
-  const cfg=cfgOverride||ROUND_CFG[state.round];
-  if(!cfgOverride&&state.subQ>=cfg.qs){clearInterval(state.timerInterval);sfxRound();setTimeout(nextRound,600);return;}
+// ── Drag the tracer dot along the circle ──
+function tracerPtrDown(e){tracerDragging=true;updateTracerAngle(e);}
+function tracerPtrMove(e){if(tracerDragging)updateTracerAngle(e);}
+function tracerPtrUp(){tracerDragging=false;}
+function updateTracerAngle(e){
+  const rect=eCv.getBoundingClientRect();
+  const px=('touches' in e?e.touches[0].clientX:e.clientX)-rect.left-eCv.width/2;
+  const py=('touches' in e?e.touches[0].clientY:e.clientY)-rect.top-eCv.height/2;
+  tracerAngle=Math.atan2(py,px); // −π to π
+  if(tracerAngle<0)tracerAngle+=2*PI; // 0 to 2π
+  updateTracerPanel();
+}
+eCv.addEventListener('mousedown',tracerPtrDown);
+eCv.addEventListener('mousemove',tracerPtrMove);
+eCv.addEventListener('mouseup',tracerPtrUp);
+eCv.addEventListener('touchstart',e=>{tracerPtrDown(e);e.preventDefault();},{passive:false});
+eCv.addEventListener('touchmove',e=>{tracerPtrMove(e);e.preventDefault();},{passive:false});
+eCv.addEventListener('touchend',tracerPtrUp);
+
+function tracerAngleDeg(){return parseFloat((tracerAngle*180/PI).toFixed(1));}
+
+function updateTracerPanel(){
+  const deg=tracerAngleDeg();
+  const target=estimData.targetDeg;
+  document.getElementById('tracerLiveVal').textContent=deg+'°';
+  const diff=Math.abs(deg-target);
+  const pct=Math.min(100,Math.max(0,100-diff/target*120));
+  const bar=document.getElementById('tracerBar');
+  bar.style.width=pct+'%';
+  bar.style.background=diff<=3?'#4CAF50':diff<=10?'#FFC107':'#9C27B0';
+  const acc=document.getElementById('tracerAccuracy');
+  if(diff<=3)acc.textContent='🎯 Perfect — lock it in!';
+  else if(diff<=10)acc.textContent='Very close!';
+  else if(deg<target)acc.textContent='Keep dragging clockwise ↻';
+  else acc.textContent='Too far — drag back ↺';
+}
+
+function startEstim(cfgOverride){
+  showMech('estimGame');setupEstimCanvas();
+  state.subQ=0;
+  loadNextEstimQ(cfgOverride);
+}
+
+function loadNextEstimQ(cfgOvr){
+  const cfg=cfgOvr||ROUND_CFG[state.round];
+  if(!cfgOvr&&state.subQ>=cfg.qs){clearInterval(state.timerInterval);sfxRound();setTimeout(nextRound,600);return;}
   state.subQ++;
-  const {type,min,max}=cfg;
-  // pick a trueVal not used before (round to 1 dp, ensure spacing of 0.5+)
-  let trueVal,attempts=0;
+
+  // Pick a unique target angle not used before
+  const {anglePool}=cfg;
+  let targetDeg,att=0;
   do{
-    trueVal=parseFloat((min+Math.random()*(max-min)).toFixed(1));attempts++;
-  }while([...state.usedCalcKeys].some(k=>k===('E'+trueVal))&&attempts<30);
-  state.usedCalcKeys.add('E'+trueVal);
-  estimData={type,trueVal,min,max};
-  const slider=document.getElementById('estimSlider');
-  slider.min=min;slider.max=max;slider.step=parseFloat(((max-min)/40).toFixed(2));slider.value=(min+max)/2;
-  document.getElementById('sliderMin').textContent=min;
-  document.getElementById('sliderMax').textContent=max;
-  updateSlider();
-  document.getElementById('estimQ').textContent={radius:'Estimate the Radius (r)',diameter:'Estimate the Diameter (d)',circumference:'Estimate the Circumference (C)'}[type];
-  document.getElementById('estimHint').textContent='Range: '+min+' – '+max+' units';
-  setHint(type==='circumference'?'C ≈ 2πr — how big does the circle look?':type==='diameter'?'d = 2 × r — measure across the centre':'Look at the distance from centre to edge');
-  drawEstimCircle(trueVal,type,min,max);
-  startTimer(cfg.timer,()=>{
-    loseLife('Time ran out!');
-    if(state.lives>0){if(state.isCombo)setTimeout(nextCombo10Q,900);else setTimeout(()=>loadNextEstimQ(),900);}
-  });
+    targetDeg=anglePool[Math.floor(Math.random()*anglePool.length)];
+    att++;
+  }while(state.usedKeys.has('T'+targetDeg+cfg.type)&&att<20);
+  state.usedKeys.add('T'+targetDeg+cfg.type);
+
+  // Start dot at a random offset away from target so student must drag
+  tracerAngle=(targetDeg+90+Math.random()*60)*PI/180%(2*PI);
+  estimData={type:cfg.type,targetDeg,cfg};
+
+  const typeLabels={arc:'Trace the Arc',sector:'Trace the Sector',circ:'Trace the full Circumference'};
+  const targetLabel=cfg.type==='circ'?'360°':targetDeg+'°';
+  document.getElementById('tracerTarget').textContent=typeLabels[cfg.type]+': '+targetLabel;
+  document.getElementById('tracerLiveVal').textContent='—';
+  document.getElementById('tracerAccuracy').textContent='Drag the glowing dot along the circle';
+  document.getElementById('tracerBar').style.width='0%';
+  document.getElementById('tracerQCount').textContent=state.isCombo?'Combo':'Q '+state.subQ+(cfg.qs?' / '+cfg.qs:'');
+
+  const hints={arc:'Drag the dot to the correct angle · angles go clockwise from the right',sector:'Stop the dot at the target angle to form the sector',circ:'Drag all the way around to 360°'};
+  setHint(hints[cfg.type]);
+  drawTracerCircle();
+  startTimer(cfg.timer,()=>{loseLife('Time ran out!');if(state.lives>0)setTimeout(cfgOvr?nextCombo10Q:()=>loadNextEstimQ(),900);});
 }
 
-function drawEstimCircle(trueVal,type,min,max){
+function drawTracerCircle(){
   if(estimAnimId)cancelAnimationFrame(estimAnimId);
-  const w=estimCanvas.width,h=estimCanvas.height,cx=w/2,cy=h/2;
-  let r=trueVal;
-  if(type==='diameter')r=trueVal/2;
-  else if(type==='circumference')r=trueVal/(2*PI);
-  const maxR=Math.min(w,h)*0.43;
-  const refMax=type==='diameter'?max/2:type==='circumference'?max/(2*PI):max;
-  const dr=Math.min(r/refMax*maxR,maxR);
-  estimAnimT=0;
+  estimT=0;
   function frame(){
-    estimCtx.clearRect(0,0,w,h);estimAnimT+=0.025;
-    // grid dots
-    estimCtx.fillStyle='rgba(255,255,255,0.06)';
-    for(let gx=8;gx<w;gx+=16)for(let gy=8;gy<h;gy+=16){estimCtx.beginPath();estimCtx.arc(gx,gy,1,0,PI*2);estimCtx.fill();}
-    // circle
-    estimCtx.beginPath();estimCtx.arc(cx,cy,dr,0,PI*2);estimCtx.fillStyle='rgba(156,39,176,0.07)';estimCtx.fill();
-    estimCtx.beginPath();estimCtx.arc(cx,cy,dr,0,PI*2);estimCtx.strokeStyle='rgba(156,39,176,0.9)';estimCtx.lineWidth=2.5;estimCtx.stroke();
-    // animated indicator
-    if(type==='circumference'){
-      estimCtx.beginPath();estimCtx.arc(cx,cy,dr,-PI/2,-PI/2+estimAnimT%(PI*2));estimCtx.strokeStyle='#00BCD4';estimCtx.lineWidth=3;estimCtx.stroke();
-    } else {
-      estimCtx.beginPath();estimCtx.moveTo(cx,cy);
-      estimCtx.lineTo(cx+dr*Math.cos(estimAnimT),cy+dr*Math.sin(estimAnimT));
-      estimCtx.strokeStyle='rgba(156,39,176,0.45)';estimCtx.lineWidth=1.2;estimCtx.setLineDash([3,3]);estimCtx.stroke();estimCtx.setLineDash([]);
+    const w=eCv.width,h=eCv.height,cx=w/2,cy=h/2,R=w*0.38;
+    eX.clearRect(0,0,w,h);estimT+=0.022;
+
+    // dot grid
+    eX.fillStyle='rgba(255,255,255,0.05)';
+    for(let gx=10;gx<w;gx+=18)for(let gy=10;gy<h;gy+=18){eX.beginPath();eX.arc(gx,gy,1,0,PI*2);eX.fill();}
+
+    const {type,targetDeg}=estimData;
+    const targetRad=targetDeg*PI/180;
+    const curRad=tracerAngle;
+
+    // ── ghost target arc (faint) ──
+    eX.beginPath();eX.arc(cx,cy,R,0,targetRad);
+    eX.strokeStyle='rgba(156,39,176,0.18)';eX.lineWidth=10;eX.stroke();
+
+    // ── full circle outline ──
+    eX.beginPath();eX.arc(cx,cy,R,0,PI*2);
+    eX.strokeStyle='rgba(255,255,255,0.12)';eX.lineWidth=1.5;eX.stroke();
+
+    // ── traced arc so far ──
+    eX.beginPath();eX.arc(cx,cy,R,0,curRad);
+    eX.strokeStyle='rgba(156,39,176,0.85)';eX.lineWidth=5;eX.stroke();
+
+    if(type==='sector'||type==='circ'){
+      // first radius (always right, 0°)
+      eX.beginPath();eX.moveTo(cx,cy);eX.lineTo(cx+R,cy);
+      eX.strokeStyle='rgba(244,67,54,0.5)';eX.lineWidth=1.5;eX.stroke();
+      // second radius follows the dot
+      eX.beginPath();eX.moveTo(cx,cy);
+      eX.lineTo(cx+R*Math.cos(curRad),cy+R*Math.sin(curRad));
+      eX.strokeStyle='rgba(244,67,54,0.5)';eX.lineWidth=1.5;eX.stroke();
+      // sector fill
+      eX.beginPath();eX.moveTo(cx,cy);eX.arc(cx,cy,R,0,curRad);eX.closePath();
+      eX.fillStyle='rgba(156,39,176,0.1)';eX.fill();
     }
-    estimCtx.beginPath();estimCtx.arc(cx,cy,5,0,PI*2);estimCtx.fillStyle='#FFC107';estimCtx.fill();
+
+    // ── target angle tick mark ──
+    eX.beginPath();
+    eX.moveTo(cx+R*0.88*Math.cos(targetRad),cy+R*0.88*Math.sin(targetRad));
+    eX.lineTo(cx+R*1.12*Math.cos(targetRad),cy+R*1.12*Math.sin(targetRad));
+    eX.strokeStyle='#FFC107';eX.lineWidth=2.5;eX.stroke();
+    // target angle label
+    eX.fillStyle='#FFC107';eX.font='bold 10px sans-serif';eX.textAlign='center';
+    const lblR=R+18;
+    eX.fillText(targetDeg+'°',cx+lblR*Math.cos(targetRad),cy+lblR*Math.sin(targetRad));
+
+    // ── glowing draggable dot ──
+    const dotX=cx+R*Math.cos(curRad),dotY=cy+R*Math.sin(curRad);
+    const diff=Math.abs(tracerAngleDeg()-(estimData.targetDeg||360));
+    const dotCol=diff<=3?'#4CAF50':diff<=10?'#FFC107':'#9C27B0';
+    // glow
+    const grad=eX.createRadialGradient(dotX,dotY,2,dotX,dotY,tracerDragging?18:14);
+    grad.addColorStop(0,dotCol+'cc');grad.addColorStop(1,dotCol+'00');
+    eX.beginPath();eX.arc(dotX,dotY,tracerDragging?18:14,0,PI*2);eX.fillStyle=grad;eX.fill();
+    // dot body
+    eX.beginPath();eX.arc(dotX,dotY,tracerDragging?10:8,0,PI*2);
+    eX.fillStyle=dotCol;eX.fill();eX.strokeStyle='#fff';eX.lineWidth=2;eX.stroke();
+
+    // current angle label near dot
+    eX.fillStyle='rgba(255,255,255,0.7)';eX.font='bold 9px sans-serif';eX.textAlign='center';
+    const lx=cx+(R+18)*Math.cos(curRad),ly=cy+(R+18)*Math.sin(curRad);
+    if(Math.abs(lx-cx+lblR*Math.cos(targetRad))>12)eX.fillText(tracerAngleDeg()+'°',lx,ly);
+
+    // centre dot
+    eX.beginPath();eX.arc(cx,cy,4,0,PI*2);eX.fillStyle='#FFC107';eX.fill();
+
+    // hint pulse if not yet dragged close
+    if(!tracerDragging&&diff>30){
+      eX.fillStyle=`rgba(255,255,255,${0.15+0.1*Math.sin(estimT*3)})`;
+      eX.font='9px sans-serif';eX.textAlign='center';
+      eX.fillText('drag the dot →',cx,h-5);
+    }
+
+    updateTracerPanel();
     estimAnimId=requestAnimationFrame(frame);
   }
   frame();
 }
 
-function updateSlider(){
-  const s=document.getElementById('estimSlider');
-  const v=parseFloat(s.value),mn=parseFloat(s.min),mx=parseFloat(s.max);
-  s.style.setProperty('--val',((v-mn)/(mx-mn)*100)+'%');
-  document.getElementById('sliderValDisplay').textContent=v.toFixed(1);
-}
-
 function submitEstim(){
   clearInterval(state.timerInterval);
-  const val=parseFloat(document.getElementById('estimSlider').value);
-  const diff=Math.abs(val-estimData.trueVal);
-  const range=estimData.max-estimData.min;
-  const pct=diff/range*100;
+  const deg=tracerAngleDeg(),target=estimData.targetDeg;
+  const diff=Math.abs(deg-target);
   let pts,msg;
-  if(pct<=1){pts=40;msg='🎯 Exact! +40';}
-  else if(pct<=3){pts=25;msg='🌟 Very close! +25';}
-  else if(pct<=8){pts=20;msg='✓ Close! +20';}
-  else if(pct<=15){pts=15;msg='👍 Good! +15';}
-  else if(pct<=25){pts=10;msg='OK! +10';}
-  else{pts=5;msg='Answer was '+estimData.trueVal+' · +5';}
+  if(diff<=3){pts=30;msg='🎯 Perfect! +30';}
+  else if(diff<=8){pts=25;msg='🌟 Very close! +25';}
+  else if(diff<=15){pts=20;msg='✓ Close! +20';}
+  else if(diff<=25){pts=15;msg='Good! +15';}
+  else if(diff<=40){pts=10;msg='Nearly! +10';}
+  else{pts=5;msg='Target was '+target+'° · +5';}
   state.score+=pts;state.estimOk+=(pts>=20?1:0);
   if(pts>=20)sfxCorrect();else sfxWrong();
   showFeedback(msg,pts>=15);
-  if(pts>=20)spawnParticles(midXY().x,midXY().y,'#9C27B0',pts>=30?30:15);
-  updateHUD();
-  if(state.isCombo)setTimeout(nextCombo10Q,900);
-  else setTimeout(()=>loadNextEstimQ(),900);
+  if(pts>=20)spawnP(mid().x,mid().y,'#9C27B0',pts>=25?28:14);
+  updateHUD();if(state.isCombo)setTimeout(nextCombo10Q,900);else setTimeout(()=>loadNextEstimQ(),900);
 }
 
-// ═══════════════════════════════════════════════════════════
-// ROUND 10: COMBINATION
-// ═══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
+// ROUND 10 — COMBINATION
+// ══════════════════════════════════════════════════════════════
 function startCombo10(){
   state.isCombo=true;
-  state.combo10Queue=shuffle([
-    {t:'sorter'},{t:'calc'},{t:'estim'},
-    {t:'sorter'},{t:'calc'},{t:'estim'},
-  ]);
-  state.combo10Idx=0;
-  nextCombo10Q();
+  state.comboQ=shuffle([{t:'sorter'},{t:'calc'},{t:'estim'},{t:'sorter'},{t:'calc'},{t:'estim'}]);
+  state.comboIdx=0;nextCombo10Q();
 }
-
 function nextCombo10Q(){
-  if(state.combo10Idx>=state.combo10Queue.length){
-    clearInterval(state.timerInterval);
-    state.score+=50;updateHUD();
+  if(state.comboIdx>=state.comboQ.length){
+    clearInterval(state.timerInterval);state.score+=50;updateHUD();
     showFeedback('🏆 Master Round! +50 BONUS',true);sfxVictory();
     setTimeout(()=>endGame(true),1400);return;
   }
-  const q=state.combo10Queue[state.combo10Idx++];
-  document.getElementById('actLabel').textContent='Circle Master – Q'+state.combo10Idx+'/6';
+  const q=state.comboQ[state.comboIdx++];
+  document.getElementById('actLabel').textContent='Circle Master – Q'+state.comboIdx+'/6';
   state.subQ=0;
   if(q.t==='sorter')startSorter(3);
-  else if(q.t==='calc'){
-    const types=['circ','area','arc','sector'];
-    startCalc([types[Math.floor(Math.random()*types.length)]]);
-  } else {
-    const types=['radius','diameter','circumference'];
+  else if(q.t==='calc'){const types=['circ','area','arc','sector'];startCalc([types[Math.floor(Math.random()*types.length)]]);}
+  else{
+    const types=['arc','sector','circ'];
     const type=types[Math.floor(Math.random()*types.length)];
-    const ranges={radius:[1,10],diameter:[2,20],circumference:[6,60]};
-    const [mn,mx]=ranges[type];
-    startEstim({type,min:mn,max:mx,timer:30,qs:1});
+    const pools={arc:[60,90,120,150,180],sector:[90,120,150,180,270],circ:[360]};
+    startEstim({type,anglePool:pools[type],timer:30,qs:1});
   }
 }
 
 // ── SHOW PANEL ─────────────────────────────────────────────
 function showMech(id){
-  ['sorterGame','calcGame','estimGame'].forEach(m=>{
-    const el=document.getElementById(m);el.classList.remove('active');el.style.display='none';
-  });
+  ['sorterGame','calcGame','estimGame'].forEach(m=>{const el=document.getElementById(m);el.classList.remove('active');el.style.display='none';});
   if(id){const el=document.getElementById(id);el.classList.add('active');el.style.display='flex';}
 }
 
 // ── END GAME ───────────────────────────────────────────────
 function endGame(victory){
   clearInterval(state.timerInterval);stopBGMusic();
-  if(calcAnimId)cancelAnimationFrame(calcAnimId);
-  if(estimAnimId)cancelAnimationFrame(estimAnimId);
+  if(calcAnimId)cancelAnimationFrame(calcAnimId);if(estimAnimId)cancelAnimationFrame(estimAnimId);
   if(victory)sfxVictory();else sfxGameOver();
-  const sc=state.score;
-  const hs=parseInt(localStorage.getItem('cmHS')||0);
+  const sc=state.score,hs=parseInt(localStorage.getItem('cmHS')||0);
   if(sc>hs)localStorage.setItem('cmHS',sc);
   document.getElementById('highScore').textContent=Math.max(sc,hs);
   document.getElementById('endTitle').textContent=victory?'🏆 Victory!':'💀 Game Over!';
@@ -1035,11 +1140,8 @@ function endGame(victory){
   document.getElementById('endLives').textContent='❤️'.repeat(state.lives)+'🖤'.repeat(Math.max(0,3-state.lives));
   showScreen('endScreen');
   if(victory&&stars>=2){
-    const c=midXY(),cols=['#FFC107','#4CAF50','#2196F3','#9C27B0'];
-    const iv=setInterval(()=>{
-      if(!document.getElementById('endScreen').classList.contains('active')){clearInterval(iv);return;}
-      spawnParticles(c.x+Math.random()*200-100,c.y,cols[Math.floor(Math.random()*cols.length)],12);
-    },400);
+    const c=mid(),cols=['#FFC107','#4CAF50','#2196F3','#9C27B0'];
+    const iv=setInterval(()=>{if(!document.getElementById('endScreen').classList.contains('active')){clearInterval(iv);return;}spawnP(c.x+Math.random()*200-100,c.y,cols[Math.floor(Math.random()*cols.length)],11);},420);
   }
 }
 
@@ -1048,13 +1150,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='m'||e.key==='M')toggleMute();
   if(e.key==='Enter'){
     if(document.getElementById('calcGame').classList.contains('active'))submitCalc();
-    if(document.getElementById('estimGame').classList.contains('active'))submitEstim();
-  }
-  if(document.getElementById('estimGame').classList.contains('active')){
-    const s=document.getElementById('estimSlider');
-    const step=parseFloat(s.step)||0.5;
-    if(e.key==='ArrowRight'||e.key==='ArrowUp'){s.value=Math.min(parseFloat(s.max),parseFloat(s.value)+step);updateSlider();}
-    if(e.key==='ArrowLeft'||e.key==='ArrowDown'){s.value=Math.max(parseFloat(s.min),parseFloat(s.value)-step);updateSlider();}
+    else if(document.getElementById('estimGame').classList.contains('active'))submitEstim();
   }
 });
 
